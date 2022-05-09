@@ -5,7 +5,7 @@ export const SupperInput = memo(
   ({
     value,
     onChangeText,
-    onEndEditing,
+    onSubmitEditing,
     placeholder,
     placeholderTextColor,
     secureTextEntry,
@@ -23,7 +23,7 @@ export const SupperInput = memo(
         <TextInput
           value={value}
           onChangeText={onChangeText}
-          onEndEditing={onEndEditing}
+          onSubmitEditing={onSubmitEditing}
           secureTextEntry={secureTextEntry}
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}
@@ -49,5 +49,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginVertical: 10,
     fontWeight: 'bold',
+    fontSize: 15,
   },
 });

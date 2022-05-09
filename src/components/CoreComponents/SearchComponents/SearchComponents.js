@@ -30,7 +30,7 @@ export const SearchComponents = ({onPress}) => {
       <SupperInput
         value={value}
         onChangeText={setValue}
-        onEndEditing={onPressSearchEvent}
+        onSubmitEditing={onPressSearchEvent}
         placeholder={SEARCH_PLACEHOLDER}
         keyType={'search'}
         placeholderTextColor={GeneralStyles.text_color_second}
