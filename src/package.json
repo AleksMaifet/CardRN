@@ -1,0 +1,6 @@
+{
+  "name": "src",
+  "dependencies": {
+    "src": "^1.1.2"
+  }
+}
