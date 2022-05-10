@@ -64,7 +64,7 @@ export const FormScreen = () => {
           scrollEventThrottle={16}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: animation}}}],
-            {useNativeDriver: false},
+            {useNativeDriver: true},
           )}
         >
           <View style={styles.form}>

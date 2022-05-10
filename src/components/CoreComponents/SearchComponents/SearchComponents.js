@@ -18,13 +18,13 @@ export const SearchComponents = ({onPress}) => {
   };
 
   return (
-    <View style={styles.searchWrapperStyle}>
+    <View style={styles.searchWrapper}>
       <TouchableOpacity onPress={onPressSearchEvent}>
         <Icon
           name="search"
           size={18}
           color={GeneralStyles.text_color_second}
-          style={styles.iconStyle}
+          style={styles.icon}
         />
       </TouchableOpacity>
       <SupperInput
@@ -40,7 +40,7 @@ export const SearchComponents = ({onPress}) => {
           name="close"
           size={20}
           color={GeneralStyles.text_color_second}
-          style={styles.iconStyle}
+          style={styles.icon}
         />
       </TouchableOpacity>
     </View>
@@ -48,13 +48,13 @@ export const SearchComponents = ({onPress}) => {
 };
 
 const styles = StyleSheet.create({
-  searchWrapperStyle: {
+  searchWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     width: Dimensions.get('window').width,
     backgroundColor: GeneralStyles.primary_color_second,
   },
-  iconStyle: {
+  icon: {
     marginHorizontal: 10,
   },
 });

@@ -1,7 +1,7 @@
 import {
   APP_ACTION_TYPES,
+  APP_AUTHORIZATION_TYPES,
   APP_PACKS_TYPES,
-  TYPES,
 } from 'src/store/actions/actionTypes';
 
 export const IsLoadingAC = isLoading => {
@@ -15,7 +15,7 @@ export const IsLoadingAC = isLoading => {
 
 export const LoginizationAC = signInData => {
   return {
-    type: TYPES.APP_LOGINIZATION_DATA,
+    type: APP_AUTHORIZATION_TYPES.APP_LOGINIZATION_DATA,
     payload: {
       signInData,
     },
@@ -24,7 +24,7 @@ export const LoginizationAC = signInData => {
 
 export const AuthorizationAC = signUpData => {
   return {
-    type: TYPES.APP_AUTHORIZATION_DATA,
+    type: APP_AUTHORIZATION_TYPES.APP_AUTHORIZATION_DATA,
     payload: {
       signUpData,
     },
@@ -33,7 +33,7 @@ export const AuthorizationAC = signUpData => {
 
 export const AuthorizationErrorAC = errorMessage => {
   return {
-    type: TYPES.APP_AUTHORIZATION_ERROR_DATA,
+    type: APP_AUTHORIZATION_TYPES.APP_AUTHORIZATION_ERROR_DATA,
     errorMessage,
   };
 };

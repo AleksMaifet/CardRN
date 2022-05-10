@@ -6,6 +6,7 @@ import {
 } from 'redux';
 import {
   appAuthorizationReducer,
+  appCardsReducer,
   appErrorReducer,
   appPacksReducer,
   appReducer,
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   authorization: appAuthorizationReducer,
   error: appErrorReducer,
   packs: appPacksReducer,
+  cards: appCardsReducer,
 });
 
 export const store = createStore(

@@ -3,7 +3,7 @@ import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import {LinearGradientWrapper} from 'src/components/LinearGradientWrapper';
 import {GeneralStyles} from 'src/assets/generalStyles';
 import {useDispatch, useSelector} from 'react-redux';
-import {Pack} from 'src/components/CoreComponents/Pack/Pack';
+
 import {
   selectorGetPacks,
   selectorGetPackSearchName,
@@ -26,6 +26,7 @@ import {
   UpdatePackTitleTC,
 } from 'src/store/thunks';
 import {ModalScreenPack} from 'src/components/ModalWindow/ModalScreens';
+import {Pack} from 'src/components/Screens/Main/PacksScreen/Pack';
 
 const BUTTON_VALUE = 'ADD PACK';
 
@@ -36,7 +37,7 @@ const PRIMARY_BUTTON_TEXT = 'CREATE';
 
 const START_PAGE_VALUE = 2;
 
-export const PacksScreen = () => {
+export const PacksScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(selectorIsLoading);
@@ -139,6 +140,7 @@ export const PacksScreen = () => {
           renderItem={({item: {name, cardsCount, _id}}) => {
             return (
               <Pack
+                navigation={navigation}
                 name={name}
                 count={cardsCount}
                 id={_id}
@@ -154,7 +156,7 @@ export const PacksScreen = () => {
           showsVerticalScrollIndicator={false}
         />
       )}
-      <View style={styles.buttonWrapperStyle}>
+      <View style={styles.buttonWrapper}>
         <SuperButton
           text={BUTTON_VALUE}
           callback={showModalHandle}
@@ -168,13 +170,7 @@ export const PacksScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  containerStyle: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'pink',
-  },
-  buttonWrapperStyle: {
+  buttonWrapper: {
     width: Dimensions.get('window').width,
     paddingHorizontal: 10,
     marginVertical: 20,

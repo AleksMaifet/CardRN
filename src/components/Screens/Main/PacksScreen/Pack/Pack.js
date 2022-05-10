@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {GeneralStyles} from 'src/assets/generalStyles';
 import {ModalWindow} from 'src/components/ModalWindow';
 import {ModalScreenPack} from 'src/components/ModalWindow/ModalScreens';
+import {Screens} from 'src/navigation/screens';
 
 const COUNT_TEST = 'Cards';
 const TITLE_TEXT = 'Change Pack Name';
@@ -11,7 +12,7 @@ const BUTTON_TEXT = 'CANCEL';
 const PRIMARY_BUTTON_TEXT = 'CHANGE';
 
 export const Pack = memo(
-  ({name, count, id, changeTitleHandle, deleteHandle}) => {
+  ({navigation, name, count, id, changeTitleHandle, deleteHandle}) => {
     const [showModal, setShowModal] = useState(false);
 
     const showModalHandle = () => {
@@ -30,7 +31,10 @@ export const Pack = memo(
     );
 
     return (
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(Screens.CARDS_SCREEN, {name, id})}
+        style={styles.container}
+      >
         <ModalWindow
           showModal={showModal}
           closeShowModal={showModalHandle}
@@ -49,7 +53,7 @@ export const Pack = memo(
           <Text style={{...styles.count, fontSize: 22}}>{count}</Text>
           <Text style={styles.count}>{COUNT_TEST}</Text>
         </View>
-        <View style={styles.textTitleCotainer}>
+        <View style={styles.textTitleContainer}>
           <Text style={styles.textTitle}>{name}</Text>
         </View>
         <View style={styles.iconsContainer}>
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 300,
     elevation: 5,
   },
-  textTitleCotainer: {
+  textTitleContainer: {
     justifyContent: 'center',
     width: 200,
     height: 100,

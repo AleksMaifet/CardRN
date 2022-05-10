@@ -1,2 +1,3 @@
-export {PacksScreen} from 'src/components/Screens/Main/PacksScreen';
-export {FormScreen} from 'src/components/Screens/Main/Authorization';
+export {PacksScreen} from './PacksScreen/index';
+export {FormScreen} from './Authorization/index';
+export {CardsScreen} from './CardsScreen/index';

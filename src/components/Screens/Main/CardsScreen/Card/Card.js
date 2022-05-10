@@ -1,16 +1,17 @@
 import React from 'react';
 
 import {
+  Animated,
+  Pressable,
   SafeAreaView,
   StyleSheet,
-  View,
   Text,
-  TouchableOpacity,
-  Animated,
+  View,
 } from 'react-native';
+import {GeneralStyles} from 'src/assets/generalStyles';
 
 export const Card = () => {
-  let animatedValue = new Animated.Value(0);
+  const animatedValue = new Animated.Value(0);
   let currentValue = 0;
 
   animatedValue.addListener(({value}) => {
@@ -23,7 +24,7 @@ export const Card = () => {
         toValue: 0,
         tension: 10,
         friction: 8,
-        useNativeDriver: false,
+        useNativeDriver: true,
       }).start();
       return;
     }
@@ -31,7 +32,7 @@ export const Card = () => {
       toValue: 180,
       tension: 10,
       friction: 8,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -52,61 +53,58 @@ export const Card = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <Text style={styles.titleText}>
-          React Native Flip Image View Horizontally with Animation
-        </Text>
-        <View>
-          <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
-            <Text>FRONT</Text>
-          </Animated.View>
-          <Animated.View
-            style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle]}
-          >
-            <Text>BACK</Text>
-          </Animated.View>
-        </View>
-        <TouchableOpacity style={styles.buttonStyle} onPress={flipAnimation}>
-          <Text style={styles.buttonTextStyle}>
-            Click Here To Flip The Image
-          </Text>
-        </TouchableOpacity>
-      </View>
+    <SafeAreaView>
+      <Pressable onPress={flipAnimation}>
+        <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
+          <View>
+            <Text style={{...styles.text, fontSize: 30, textAlign: 'center'}}>
+              FRONT
+            </Text>
+            <View style={styles.strip} />
+          </View>
+          <View style={styles.textContainer}>
+            <Text
+              style={{
+                ...styles.text,
+                fontSize: 15,
+              }}
+            >
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </Text>
+          </View>
+        </Animated.View>
+        <Animated.View
+          style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle]}
+        >
+          <Text>BACK</Text>
+        </Animated.View>
+      </Pressable>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  textContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    height: '80%',
   },
-  titleText: {
-    fontSize: 22,
-    textAlign: 'center',
-    fontWeight: 'bold',
+  text: {
+    fontFamily: 'Poppins-Bold',
   },
-  buttonStyle: {
-    fontSize: 16,
-    color: 'white',
-    backgroundColor: 'green',
-    padding: 5,
-    marginTop: 32,
-    minWidth: 250,
-  },
-  buttonTextStyle: {
-    padding: 5,
-    color: 'white',
-    textAlign: 'center',
+  strip: {
+    height: 3,
+    backgroundColor: GeneralStyles.primary_color_second,
   },
   flipCard: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 200,
-    height: 200,
-    backgroundColor: 'blue',
+    width: 350,
+    height: 250,
+    padding: 10,
+    textAlign: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    overflow: 'hidden',
     backfaceVisibility: 'hidden',
   },
   flipCardBack: {

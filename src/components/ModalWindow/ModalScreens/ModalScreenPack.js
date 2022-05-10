@@ -41,9 +41,7 @@ export const ModalScreenPack = memo(
 
     return (
       <>
-        <Text style={{...styles.textStyle, fontWeight: '700'}}>
-          {titleText}
-        </Text>
+        <Text style={{...styles.text, fontWeight: '700'}}>{titleText}</Text>
         <Text style={styles.textStyle}>{preTitleText}</Text>
         <SupperInput
           value={value}
@@ -51,7 +49,7 @@ export const ModalScreenPack = memo(
           borderColor={GeneralStyles.primary_color_second}
           selectionColor={GeneralStyles.primary_color_second}
         />
-        <View style={styles.buttonContainerStyle}>
+        <View style={styles.buttonContainer}>
           <SuperButton
             callback={showModalEvent}
             width={100}
@@ -71,11 +69,11 @@ export const ModalScreenPack = memo(
 );
 
 const styles = StyleSheet.create({
-  textStyle: {
+  text: {
     fontSize: 22,
     color: GeneralStyles.text_color,
   },
-  buttonContainerStyle: {
+  buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
