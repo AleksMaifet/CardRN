@@ -1,2 +1,2 @@
-export {HomeScreen} from 'src/components/Screens/Main/HomeScreen';
+export {PacksScreen} from 'src/components/Screens/Main/PacksScreen';
 export {FormScreen} from 'src/components/Screens/Main/Authorization';

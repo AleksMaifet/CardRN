@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {BASE_URLS} from 'src/apiRequests/urls';
+
 const initial = axios.create({
   baseURL: `${BASE_URLS.CARDS}cards/pack/`,
 });
@@ -17,9 +18,9 @@ export class apiPack {
     });
   }
 
-  static changeUserPack(_id, name) {
+  static updateUserPack(_id, name) {
     return initial.put('', {
-      params: {
+      cardsPack: {
         _id,
         name,
       },

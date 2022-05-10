@@ -7,6 +7,7 @@ import {
   LoginizationAC,
   SetMaxCountPageAC,
   SetNextPackAC,
+  UpdatePackTitleAC,
 } from 'src/store/actions';
 import {
   handleScrollView,
@@ -93,6 +94,17 @@ export const SetPackTC = title => {
       handleServerError(err, dispatch);
     } finally {
       handleSpinnerTimerEnd(dispatch);
+    }
+  };
+};
+
+export const UpdatePackTitleTC = (name, id) => {
+  return async dispatch => {
+    try {
+      await apiPack.updateUserPack(id, name);
+      dispatch(UpdatePackTitleAC(name, id));
+    } catch (err) {
+      handleServerError(err, dispatch);
     }
   };
 };

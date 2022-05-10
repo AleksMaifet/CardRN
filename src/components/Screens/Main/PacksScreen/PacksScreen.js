@@ -16,25 +16,27 @@ import {
   SearchComponents,
   SuperButton,
 } from 'src/components/CoreComponents';
-import {ModalScreen} from 'src/components/ModalScreen';
+import {ModalWindow} from 'src/components/ModalWindow';
 import {SearchPackNameAC} from 'src/store/actions';
 import {
   DeletePackTC,
   GetNextPackTC,
   GetPacksTC,
   SetPackTC,
+  UpdatePackTitleTC,
 } from 'src/store/thunks';
+import {ModalScreenPack} from 'src/components/ModalWindow/ModalScreens';
 
 const BUTTON_VALUE = 'ADD PACK';
 
 const TITLE_TEXT = 'New Pack';
 const PRE_TITLE_TEXT = 'Enter a name';
-const BUTTON_VALUE_BACK = 'CANCEL';
-const SECOND_BUTTON_CREATE = 'CREATE';
+const BUTTON_TEXT = 'CANCEL';
+const PRIMARY_BUTTON_TEXT = 'CREATE';
 
 const START_PAGE_VALUE = 2;
 
-export const HomeScreen = () => {
+export const PacksScreen = () => {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(selectorIsLoading);
@@ -53,7 +55,7 @@ export const HomeScreen = () => {
 
   const isShowIndicator = currentPage <= maxPage && isLoadMore;
 
-  const isShowModalHandle = () => {
+  const showModalHandle = () => {
     setShowModal(state => !state);
   };
 
@@ -73,9 +75,12 @@ export const HomeScreen = () => {
     [dispatch],
   );
 
-  const onPressChangeTitlePackHandle = (title, id) => {
-    console.log(title);
-  };
+  const onPressChangeTitlePackHandle = useCallback(
+    (title, id) => {
+      dispatch(UpdatePackTitleTC(title, id));
+    },
+    [dispatch],
+  );
 
   const onPressDeletePackHandle = useCallback(
     id => {
@@ -110,15 +115,16 @@ export const HomeScreen = () => {
     <LinearGradientWrapper
       color={GeneralStyles.liner_gradient.firstColorScreen}
     >
-      <ModalScreen
-        showModal={showModal}
-        isShowModal={isShowModalHandle}
-        callback={onPressSetPackHandle}
-        title={TITLE_TEXT}
-        preTitle={PRE_TITLE_TEXT}
-        buttonText={BUTTON_VALUE_BACK}
-        primaryButtonText={SECOND_BUTTON_CREATE}
-      />
+      <ModalWindow showModal={showModal} closeShowModal={showModalHandle}>
+        <ModalScreenPack
+          showModal={showModalHandle}
+          callback={onPressSetPackHandle}
+          titleText={TITLE_TEXT}
+          preTitleText={PRE_TITLE_TEXT}
+          buttonText={BUTTON_TEXT}
+          primaryButtonText={PRIMARY_BUTTON_TEXT}
+        />
+      </ModalWindow>
       <SearchComponents onPress={onPressSearchPackNameHandle} />
       {isLoading === 'loading' ? (
         <Indicator
@@ -151,7 +157,7 @@ export const HomeScreen = () => {
       <View style={styles.buttonWrapperStyle}>
         <SuperButton
           text={BUTTON_VALUE}
-          callback={isShowModalHandle}
+          callback={showModalHandle}
           backgroundColor={GeneralStyles.primary_color_second}
           color={GeneralStyles.text_color_second}
           width={'100%'}

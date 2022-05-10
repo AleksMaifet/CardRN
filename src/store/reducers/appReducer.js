@@ -29,6 +29,16 @@ export const appReducer = (state = initState, action) => {
           cardPacks: [...state.packs.cardPacks, ...action.data.cardPacks],
         },
       };
+    case APP_PACKS_TYPES.APP_CHANGE_PACK_TITLE:
+      return {
+        ...state,
+        packs: {
+          ...state.packs,
+          cardPacks: state.packs.cardPacks.map(el =>
+            el._id === action.id ? {...el, name: action.name} : el,
+          ),
+        },
+      };
     case APP_PACKS_TYPES.APP_SET_DELETE_PAGE:
       return {
         ...state,

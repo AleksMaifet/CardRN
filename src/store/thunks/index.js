@@ -5,4 +5,5 @@ export {
   SetPackTC,
   DeletePackTC,
   GetNextPackTC,
+  UpdatePackTitleTC,
 } from './thunkCreators';

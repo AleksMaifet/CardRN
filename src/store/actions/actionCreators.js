@@ -61,6 +61,14 @@ export const SearchPackNameAC = searchPackName => {
   };
 };
 
+export const UpdatePackTitleAC = (name, id) => {
+  return {
+    type: APP_PACKS_TYPES.APP_CHANGE_PACK_TITLE,
+    name,
+    id,
+  };
+};
+
 export const DeletePackAC = id => {
   return {
     type: APP_PACKS_TYPES.APP_SET_DELETE_PAGE,

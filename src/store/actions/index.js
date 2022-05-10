@@ -7,5 +7,6 @@ export {
   SearchPackNameAC,
   SetMaxCountPageAC,
   SetNextPackAC,
+  UpdatePackTitleAC,
   DeletePackAC,
 } from './actionCreators';
