@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 
 import {
   Animated,
@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 import {GeneralStyles} from 'src/assets/generalStyles';
 
-export const Card = () => {
+const TITLE_FRONT_SIDE = 'QUESTION';
+
+export const Card = memo(({question, answer, id}) => {
   const animatedValue = new Animated.Value(0);
   let currentValue = 0;
 
@@ -56,42 +58,47 @@ export const Card = () => {
     <SafeAreaView>
       <Pressable onPress={flipAnimation}>
         <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
-          <View>
-            <Text style={{...styles.text, fontSize: 30, textAlign: 'center'}}>
-              FRONT
-            </Text>
-            <View style={styles.strip} />
-          </View>
-          <View style={styles.textContainer}>
+          <View style={styles.container}>
             <Text
               style={{
                 ...styles.text,
-                fontSize: 15,
+                fontSize: 30,
+                color: GeneralStyles.primary_color_third,
               }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              {TITLE_FRONT_SIDE}
             </Text>
+            <View style={styles.strip} />
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>{question}</Text>
+            </View>
           </View>
         </Animated.View>
         <Animated.View
           style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle]}
         >
-          <Text>BACK</Text>
+          <View>
+            <Text style={styles.text}>{answer}</Text>
+          </View>
         </Animated.View>
       </Pressable>
     </SafeAreaView>
   );
-};
+});
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    overflow: 'hidden',
+  },
   textContainer: {
-    alignItems: 'center',
     justifyContent: 'center',
     height: '80%',
   },
   text: {
+    fontSize: 20,
     fontFamily: 'Poppins-Bold',
+    textAlign: 'center',
   },
   strip: {
     height: 3,
@@ -99,17 +106,16 @@ const styles = StyleSheet.create({
   },
   flipCard: {
     width: 350,
-    height: 250,
+    height: 300,
     padding: 10,
-    textAlign: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: GeneralStyles.text_color_second,
     borderRadius: 10,
-    overflow: 'hidden',
     backfaceVisibility: 'hidden',
   },
   flipCardBack: {
+    justifyContent: 'center',
     position: 'absolute',
     top: 0,
-    backgroundColor: 'red',
+    backgroundColor: GeneralStyles.text_color_second,
   },
 });

@@ -1,17 +1,26 @@
-import {APP_ACTION_TYPES, APP_PACKS_TYPES} from 'src/store/actions/actionTypes';
+import {
+  APP_ACTION_TYPES,
+  APP_CARDS_TYPES,
+  APP_PACKS_TYPES,
+} from 'src/store/actions/actionTypes';
 
 // export type IsLoadType = 'idle' | 'loading' | 'success';
 
 const initState = {
   isLoading: 'idle',
+  isRefreshListLoading: 'idle',
   packs: {
     cardPacks: [],
+  },
+  cards: {
+    cards: [],
   },
 };
 
 export const appReducer = (state = initState, action) => {
   switch (action.type) {
     case APP_ACTION_TYPES.APP_IS_LOADING:
+    case APP_ACTION_TYPES.APP_IS_LOADING_REFRESH_LIST:
       return {
         ...state,
         ...action.payload,
@@ -46,6 +55,11 @@ export const appReducer = (state = initState, action) => {
           ...state.packs,
           cardPacks: state.packs.cardPacks.filter(({_id}) => _id !== action.id),
         },
+      };
+    case APP_CARDS_TYPES.APP_GET_CARDS:
+      return {
+        ...state,
+        cards: action.data,
       };
     default:
       return state;

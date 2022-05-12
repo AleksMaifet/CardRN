@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 90,
     padding: 20,
-    backgroundColor: '#954AA1',
+    backgroundColor: GeneralStyles.primary_color_third,
     borderRadius: 30,
   },
   count: {

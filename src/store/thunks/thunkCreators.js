@@ -1,9 +1,11 @@
-import {apiAuthorization, apiPack} from 'src/apiRequests';
+import {apiAuthorization, apiCard, apiPack} from 'src/apiRequests';
 import {
   AuthorizationAC,
   DeletePackAC,
+  GetCardsAC,
   GetPacksAC,
   IsLoadingAC,
+  IsLoadingRefreshListAC,
   LoginizationAC,
   SetMaxCountPageAC,
   SetNextPackAC,
@@ -48,13 +50,13 @@ export const AuthorizationTC = (values, scrollView) => {
 
 export const GetPacksTC = () => {
   return async (dispatch, getState) => {
+    dispatch(IsLoadingAC('loading'));
     const userId = getState().authorization.signInData._id;
     const packName = getState().packs.searchPackName;
     const params = {
       user_id: userId,
       packName,
     };
-    dispatch(IsLoadingAC('loading'));
     try {
       const {data} = await apiPack.getUserPacks(params);
       const {pageCount, cardPacksTotalCount} = data;
@@ -64,6 +66,28 @@ export const GetPacksTC = () => {
       handleServerError(err, dispatch);
     } finally {
       dispatch(IsLoadingAC('success'));
+    }
+  };
+};
+
+export const RefreshPacksTC = () => {
+  return async (dispatch, getState) => {
+    dispatch(IsLoadingRefreshListAC('loading'));
+    const userId = getState().authorization.signInData._id;
+    const packName = getState().packs.searchPackName;
+    const params = {
+      user_id: userId,
+      packName,
+    };
+    try {
+      const {data} = await apiPack.getUserPacks(params);
+      const {pageCount, cardPacksTotalCount} = data;
+      dispatch(GetPacksAC(data));
+      dispatch(SetMaxCountPageAC(pageCount, cardPacksTotalCount));
+    } catch (err) {
+      handleServerError(err, dispatch);
+    } finally {
+      dispatch(IsLoadingRefreshListAC('success'));
     }
   };
 };
@@ -116,6 +140,41 @@ export const DeletePackTC = id => {
       dispatch(DeletePackAC(id));
     } catch (err) {
       handleServerError(err, dispatch);
+    }
+  };
+};
+
+export const GetCardsTC = () => {
+  return async (dispatch, getState) => {
+    dispatch(IsLoadingAC('loading'));
+    const cardPackId = getState().cards.cardPackId;
+    const pageCount = getState().cards.pageCount;
+    const params = {
+      cardsPack_id: cardPackId,
+      pageCount,
+    };
+    try {
+      const {data} = await apiCard.getUserCards(params);
+      dispatch(GetCardsAC(data));
+    } catch (err) {
+      handleServerError(err, dispatch);
+    } finally {
+      dispatch(IsLoadingAC('success'));
+    }
+  };
+};
+
+export const SetCardTC = card => {
+  return async (dispatch, getState) => {
+    // dispatch(IsLoadingAC('loading'));
+    const cardsPack_id = getState().cards.cardPackId;
+    try {
+      await apiCard.setUserCard({...card, cardsPack_id});
+      dispatch(GetCardsTC());
+    } catch (err) {
+      handleServerError(err, dispatch);
+    } finally {
+      handleSpinnerTimerEnd(dispatch, 1200);
     }
   };
 };

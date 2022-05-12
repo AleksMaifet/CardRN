@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  CardStyleInterpolators,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   CardsScreen,
   FormScreen,
@@ -20,7 +17,7 @@ export const ContainerStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        presentation: 'transparentModal',
       }}
     >
       {!isToken ? (

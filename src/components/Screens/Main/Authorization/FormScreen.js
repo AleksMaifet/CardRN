@@ -42,6 +42,7 @@ export const FormScreen = () => {
           isShow={isLoading === 'loading'}
           size={'large'}
           color={GeneralStyles.border_color}
+          height={50}
         />
         <View style={styles.titleContainer}>
           <FormTitle
@@ -64,7 +65,7 @@ export const FormScreen = () => {
           scrollEventThrottle={16}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: animation}}}],
-            {useNativeDriver: true},
+            {useNativeDriver: false},
           )}
         >
           <View style={styles.form}>

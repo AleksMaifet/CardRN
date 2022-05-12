@@ -1,9 +1,10 @@
 export const GeneralStyles = {
   border_color: 'rgba(158, 150, 150, 0.7)',
   text_color: '#2D2E46',
-  text_color_second: '#ECECF9',
+  text_color_second: '#fff',
   primary_color: '#21268F',
   primary_color_second: '#f66',
+  primary_color_third: '#954AA1',
   font_weight: '600',
   error_text: {
     color: 'crimson',

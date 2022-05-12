@@ -1,1 +1,2 @@
-export {ModalScreenPack} from 'src/components/ModalWindow/ModalScreens/ModalScreenPack';
+export {ModalScreenPack} from './ModalScreenPack';
+export {ModalScreenCard} from './ModalScreenCard';

@@ -1,6 +1,7 @@
 import {
   APP_ACTION_TYPES,
   APP_AUTHORIZATION_TYPES,
+  APP_CARDS_TYPES,
   APP_PACKS_TYPES,
 } from 'src/store/actions/actionTypes';
 
@@ -9,6 +10,15 @@ export const IsLoadingAC = isLoading => {
     type: APP_ACTION_TYPES.APP_IS_LOADING,
     payload: {
       isLoading,
+    },
+  };
+};
+
+export const IsLoadingRefreshListAC = isRefreshListLoading => {
+  return {
+    type: APP_ACTION_TYPES.APP_IS_LOADING_REFRESH_LIST,
+    payload: {
+      isRefreshListLoading,
     },
   };
 };
@@ -83,5 +93,21 @@ export const SetMaxCountPageAC = (pageCount, cardPacksTotalCount) => {
       pageCount,
       cardPacksTotalCount,
     },
+  };
+};
+
+export const SetCardPackIdAC = cardPackId => {
+  return {
+    type: APP_CARDS_TYPES.APP_SET_CARD_PACK_ID,
+    payload: {
+      cardPackId,
+    },
+  };
+};
+
+export const GetCardsAC = data => {
+  return {
+    type: APP_CARDS_TYPES.APP_GET_CARDS,
+    data,
   };
 };

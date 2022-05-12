@@ -10,12 +10,14 @@ export const SupperInput = memo(
     placeholderTextColor,
     secureTextEntry,
     width = 315,
-    height = 40,
     borderColor,
     errorBorderColor,
     selectionColor,
     isError,
     keyType,
+    multiline,
+    autoFocus,
+    numberOfLines,
     svg,
   }) => {
     return (
@@ -29,9 +31,12 @@ export const SupperInput = memo(
           placeholderTextColor={placeholderTextColor}
           selectionColor={selectionColor}
           returnKeyType={keyType}
+          multiline={multiline}
+          numberOfLines={numberOfLines}
+          autoFocus={autoFocus}
           style={[
             styles.input,
-            {width, height},
+            {width},
             isError ? {borderColor: errorBorderColor} : {borderColor},
           ]}
         />
@@ -43,11 +48,8 @@ export const SupperInput = memo(
 
 const styles = StyleSheet.create({
   input: {
-    position: 'relative',
     borderBottomWidth: 1,
-    borderRadius: 14,
-    paddingHorizontal: 15,
-    marginVertical: 10,
+    marginVertical: 5,
     fontWeight: 'bold',
     fontSize: 15,
   },

@@ -1,5 +1,11 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  View,
+  RefreshControl,
+} from 'react-native';
 import {LinearGradientWrapper} from 'src/components/LinearGradientWrapper';
 import {GeneralStyles} from 'src/assets/generalStyles';
 import {useDispatch, useSelector} from 'react-redux';
@@ -10,6 +16,7 @@ import {
   selectorGetPacksTotalCount,
   selectorGetPageCount,
   selectorIsLoading,
+  selectorIsRefreshListLoading,
 } from 'src/store/selectors';
 import {
   Indicator,
@@ -22,6 +29,7 @@ import {
   DeletePackTC,
   GetNextPackTC,
   GetPacksTC,
+  RefreshPacksTC,
   SetPackTC,
   UpdatePackTitleTC,
 } from 'src/store/thunks';
@@ -41,6 +49,7 @@ export const PacksScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(selectorIsLoading);
+  const isRefreshListLoading = useSelector(selectorIsRefreshListLoading);
   const getPacks = useSelector(selectorGetPacks);
   const getSearchPackName = useSelector(selectorGetPackSearchName);
   const getPageCount = useSelector(selectorGetPageCount);
@@ -61,9 +70,9 @@ export const PacksScreen = ({navigation}) => {
   };
 
   const onPressSearchPackNameHandle = useCallback(
-    name => {
-      name.length ? setIsLoadMore(false) : setIsLoadMore(true);
-      dispatch(SearchPackNameAC(name));
+    searchText => {
+      searchText.length ? setIsLoadMore(false) : setIsLoadMore(true);
+      dispatch(SearchPackNameAC(searchText));
     },
     [dispatch],
   );
@@ -90,11 +99,16 @@ export const PacksScreen = ({navigation}) => {
     [dispatch],
   );
 
-  const loadMoreItem = () => {
+  const loadMoreItemHandle = () => {
     if (isShowIndicator) {
       setCurrentPage(state => state + 1);
       dispatch(GetNextPackTC(currentPage));
     }
+  };
+
+  const onRefreshHandle = () => {
+    dispatch(RefreshPacksTC());
+    setCurrentPage(START_PAGE_VALUE);
   };
 
   useEffect(() => {
@@ -127,14 +141,12 @@ export const PacksScreen = ({navigation}) => {
         />
       </ModalWindow>
       <SearchComponents onPress={onPressSearchPackNameHandle} />
-      {isLoading === 'loading' ? (
-        <Indicator
-          isShow
-          size={50}
-          height={584}
-          color={GeneralStyles.border_color}
-        />
-      ) : (
+      <Indicator
+        isShow={isLoading === 'loading'}
+        size={'large'}
+        height={615}
+        color={GeneralStyles.border_color}
+      >
         <FlatList
           data={getPacks}
           renderItem={({item: {name, cardsCount, _id}}) => {
@@ -149,13 +161,20 @@ export const PacksScreen = ({navigation}) => {
               />
             );
           }}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshListLoading === 'loading'}
+              onRefresh={onRefreshHandle}
+              colors={GeneralStyles.liner_gradient.firstColorScreen}
+            />
+          }
           keyExtractor={item => item._id}
           ListFooterComponent={renderLoader}
-          onEndReached={loadMoreItem}
+          onEndReached={loadMoreItemHandle}
           onEndReachedThreshold={0.1}
           showsVerticalScrollIndicator={false}
         />
-      )}
+      </Indicator>
       <View style={styles.buttonWrapper}>
         <SuperButton
           text={BUTTON_VALUE}
