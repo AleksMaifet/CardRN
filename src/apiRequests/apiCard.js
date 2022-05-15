@@ -24,7 +24,9 @@ export class apiCard {
 
   static deleteUserCard(id) {
     return initial.delete('', {
-      id,
+      params: {
+        id,
+      },
     });
   }
 }

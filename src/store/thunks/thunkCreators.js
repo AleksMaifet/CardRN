@@ -1,6 +1,7 @@
 import {apiAuthorization, apiCard, apiPack} from 'src/apiRequests';
 import {
   AuthorizationAC,
+  DeleteCardAC,
   DeletePackAC,
   GetCardsAC,
   GetPacksAC,
@@ -10,6 +11,8 @@ import {
   SetMaxCountPageAC,
   SetNextPackAC,
   UpdatePackTitleAC,
+  UpdateTotalCardsCountAC,
+  UpdateTotalPacksCountAC,
 } from 'src/store/actions';
 import {
   handleScrollView,
@@ -134,10 +137,18 @@ export const UpdatePackTitleTC = (name, id) => {
 };
 
 export const DeletePackTC = id => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const userId = getState().authorization.signInData._id;
+    const params = {
+      user_id: userId,
+    };
     try {
-      await apiPack.deleteUserPack(id);
       dispatch(DeletePackAC(id));
+      await apiPack.deleteUserPack(id);
+      const {
+        data: {cardPacksTotalCount},
+      } = await apiPack.getUserPacks(params);
+      dispatch(UpdateTotalPacksCountAC(cardPacksTotalCount));
     } catch (err) {
       handleServerError(err, dispatch);
     }
@@ -147,10 +158,10 @@ export const DeletePackTC = id => {
 export const GetCardsTC = () => {
   return async (dispatch, getState) => {
     dispatch(IsLoadingAC('loading'));
-    const cardPackId = getState().cards.cardPackId;
+    const cardsPack_id = getState().cards.cardPackId;
     const pageCount = getState().cards.pageCount;
     const params = {
-      cardsPack_id: cardPackId,
+      cardsPack_id,
       pageCount,
     };
     try {
@@ -166,7 +177,7 @@ export const GetCardsTC = () => {
 
 export const SetCardTC = card => {
   return async (dispatch, getState) => {
-    // dispatch(IsLoadingAC('loading'));
+    dispatch(IsLoadingAC('loading'));
     const cardsPack_id = getState().cards.cardPackId;
     try {
       await apiCard.setUserCard({...card, cardsPack_id});
@@ -174,7 +185,26 @@ export const SetCardTC = card => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      handleSpinnerTimerEnd(dispatch, 1200);
+      handleSpinnerTimerEnd(dispatch, 1500);
+    }
+  };
+};
+
+export const DeleteCardTC = cardId => {
+  return async (dispatch, getState) => {
+    const cardsPack_id = getState().cards.cardPackId;
+    const params = {
+      cardsPack_id,
+    };
+    try {
+      dispatch(DeleteCardAC(cardId));
+      await apiCard.deleteUserCard(cardId);
+      const {
+        data: {cardsTotalCount},
+      } = await apiCard.getUserCards(params);
+      dispatch(UpdateTotalCardsCountAC(cardsTotalCount));
+    } catch (err) {
+      handleServerError(err, dispatch);
     }
   };
 };

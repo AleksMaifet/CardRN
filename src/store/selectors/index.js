@@ -6,3 +6,5 @@ export {selectorGetPageCount} from './selectorGetPageCount';
 export {selectorGetPacksTotalCount} from './selectorGetPacksTotalCount';
 export {selectorGetCards} from './selectorGetCards';
 export {selectorIsRefreshListLoading} from './selectorIsRefreshListLoading';
+export {selectorGetAvatar} from './selectorGetAvatar';
+export {selectorGetName} from './selectorGetName';

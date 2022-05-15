@@ -5,7 +5,7 @@ import {Header} from 'src/components/Screens/Header';
 import {Card} from 'src/components/Screens/Main/CardsScreen/Card';
 import {useDispatch, useSelector} from 'react-redux';
 import {SetCardPackIdAC} from 'src/store/actions';
-import {GetCardsTC, SetCardTC} from 'src/store/thunks';
+import {DeleteCardTC, GetCardsTC, SetCardTC} from 'src/store/thunks';
 import {selectorGetCards, selectorIsLoading} from 'src/store/selectors';
 import SwipeCards from 'react-native-swipe-cards-deck';
 import {Indicator, SuperButton} from 'src/components/CoreComponents';
@@ -19,6 +19,9 @@ const BUTTON_TEXT = 'SAVE';
 
 const BUTTON_VALUE = 'ADD CARD';
 
+const SWIPE_CARD_DELETE = 'DELETE!';
+const SWIPE_CARD_NEXT = 'NEXT!';
+
 export const CardsScreen = ({route}) => {
   const {
     params: {id, name},
@@ -30,6 +33,7 @@ export const CardsScreen = ({route}) => {
   const getCards = useSelector(selectorGetCards);
 
   const [showModal, setShowModal] = useState(false);
+  const [cardId, setCardId] = useState('');
 
   const showModalHandle = () => {
     setShowModal(state => !state);
@@ -41,6 +45,10 @@ export const CardsScreen = ({route}) => {
     },
     [dispatch],
   );
+
+  const onPressDeleteCardHandle = () => {
+    dispatch(DeleteCardTC(cardId));
+  };
 
   useEffect(() => {
     dispatch(SetCardPackIdAC(id));
@@ -78,13 +86,25 @@ export const CardsScreen = ({route}) => {
             cards={getCards}
             keyExtractor={item => item._id}
             renderCard={({question, answer, _id}) => (
-              <Card question={question} answer={answer} id={_id} />
+              <Card
+                question={question}
+                answer={answer}
+                id={_id}
+                setCardId={setCardId}
+              />
             )}
             renderNoMoreCards={() => {}}
             actions={{
-              nope: {show: false},
-              yup: {show: false},
+              nope: {
+                text: SWIPE_CARD_DELETE,
+                color: 'red',
+                onAction: onPressDeleteCardHandle,
+              },
               maybe: {show: false},
+              yup: {
+                text: SWIPE_CARD_NEXT,
+                color: 'green',
+              },
             }}
           />
         </Indicator>

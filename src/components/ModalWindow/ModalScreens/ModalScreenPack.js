@@ -46,6 +46,7 @@ export const ModalScreenPack = memo(
         <SupperInput
           value={value}
           onChangeText={setValue}
+          autoFocus
           borderColor={GeneralStyles.primary_color_second}
           selectionColor={GeneralStyles.primary_color_second}
         />

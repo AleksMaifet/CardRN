@@ -31,7 +31,7 @@ export const ModalScreenCard = memo(
               value={question}
               onChangeText={handleChange(FORMIK_STATE_QUESTION)}
               multiline
-              numberOfLines={2}
+              numberOfLines={1}
               placeholder={placeholderText}
               borderColor={GeneralStyles.primary_color_second}
               selectionColor={GeneralStyles.primary_color_second}
@@ -41,7 +41,7 @@ export const ModalScreenCard = memo(
               onChangeText={handleChange(FORMIK_STATE_ANSWER)}
               placeholder={primaryPlaceholderText}
               multiline
-              numberOfLines={2}
+              numberOfLines={1}
               borderColor={GeneralStyles.primary_color_second}
               selectionColor={GeneralStyles.primary_color_second}
             />

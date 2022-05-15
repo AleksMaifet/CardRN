@@ -1,6 +1,6 @@
 import React from 'react';
-import {Eye} from 'src/assets/svg';
 import {StyleSheet, TouchableOpacity} from 'react-native';
+import {EyeSvg} from 'src/assets/svg';
 
 export const EyeComponent = ({isSecureText}) => {
   const isVisibleHandle = () => {
@@ -9,7 +9,7 @@ export const EyeComponent = ({isSecureText}) => {
 
   return (
     <TouchableOpacity style={styles.svgEye} onPress={isVisibleHandle}>
-      <Eye />
+      <EyeSvg />
     </TouchableOpacity>
   );
 };

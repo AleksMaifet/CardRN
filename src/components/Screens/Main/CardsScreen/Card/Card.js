@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useEffect} from 'react';
 
 import {
   Animated,
@@ -12,7 +12,7 @@ import {GeneralStyles} from 'src/assets/generalStyles';
 
 const TITLE_FRONT_SIDE = 'QUESTION';
 
-export const Card = memo(({question, answer, id}) => {
+export const Card = memo(({question, answer, id, setCardId}) => {
   const animatedValue = new Animated.Value(0);
   let currentValue = 0;
 
@@ -53,6 +53,10 @@ export const Card = memo(({question, answer, id}) => {
   const backAnimatedStyle = {
     transform: [{rotateY: backInterpolate}],
   };
+
+  useEffect(() => {
+    setCardId(id);
+  }, [id]);
 
   return (
     <SafeAreaView>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Svg, {Path} from 'react-native-svg';
 
-export const Eye = () => (
+export const EyeSvg = () => (
   <Svg width={22} height={16} fill="none">
     <Path
       fillRule="evenodd"

@@ -9,4 +9,5 @@ export {
   GetCardsTC,
   RefreshPacksTC,
   SetCardTC,
+  DeleteCardTC,
 } from './thunkCreators';

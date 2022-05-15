@@ -165,7 +165,6 @@ export const PacksScreen = ({navigation}) => {
             <RefreshControl
               refreshing={isRefreshListLoading === 'loading'}
               onRefresh={onRefreshHandle}
-              colors={GeneralStyles.liner_gradient.firstColorScreen}
             />
           }
           keyExtractor={item => item._id}

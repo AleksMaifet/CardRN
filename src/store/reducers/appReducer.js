@@ -48,18 +48,44 @@ export const appReducer = (state = initState, action) => {
           ),
         },
       };
-    case APP_PACKS_TYPES.APP_SET_DELETE_PAGE:
+    case APP_ACTION_TYPES.APP_UPDATE_TOTAL_PACKS_COUNT:
       return {
         ...state,
         packs: {
           ...state.packs,
-          cardPacks: state.packs.cardPacks.filter(({_id}) => _id !== action.id),
+          ...action.payload,
+        },
+      };
+    case APP_PACKS_TYPES.APP_SET_DELETE_PACK:
+      return {
+        ...state,
+        packs: {
+          ...state.packs,
+          cardPacks: state.packs.cardPacks.filter(
+            ({_id}) => _id !== action.packId,
+          ),
         },
       };
     case APP_CARDS_TYPES.APP_GET_CARDS:
       return {
         ...state,
         cards: action.data,
+      };
+    case APP_ACTION_TYPES.APP_UPDATE_TOTAL_CARDS_COUNT:
+      return {
+        ...state,
+        cards: {
+          ...state.cards,
+          ...action.payload,
+        },
+      };
+    case APP_CARDS_TYPES.APP_DELETE_CARD:
+      return {
+        ...state,
+        cards: {
+          ...state.cards,
+          cards: state.cards.cards.filter(({_id}) => _id !== action.cardId),
+        },
       };
     default:
       return state;

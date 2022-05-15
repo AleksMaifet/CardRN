@@ -12,4 +12,7 @@ export {
   GetCardsAC,
   SetCardPackIdAC,
   IsLoadingRefreshListAC,
+  DeleteCardAC,
+  UpdateTotalPacksCountAC,
+  UpdateTotalCardsCountAC,
 } from './actionCreators';

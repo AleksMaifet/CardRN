@@ -1,13 +1,11 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {
-  CardsScreen,
-  FormScreen,
-  PacksScreen,
-} from 'src/components/Screens/Main';
+
 import {Screens} from '../screens';
 import {useSelector} from 'react-redux';
 import {selectorGetToken} from 'src/store/selectors';
+import {CardsScreen, FormScreen} from 'src/components/Screens';
+import {BottomTab} from 'src/navigation/tabs';
 
 export const ContainerStack = () => {
   const Stack = createStackNavigator();
@@ -24,7 +22,7 @@ export const ContainerStack = () => {
         <Stack.Screen name={Screens.FORM_SCREEN} component={FormScreen} />
       ) : (
         <>
-          <Stack.Screen name={Screens.PACKS_SCREEN} component={PacksScreen} />
+          <Stack.Screen name={Screens.HOME_SCREEN} component={BottomTab} />
           <Stack.Screen name={Screens.CARDS_SCREEN} component={CardsScreen} />
         </>
       )}

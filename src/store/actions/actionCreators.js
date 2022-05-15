@@ -62,6 +62,15 @@ export const SetNextPackAC = data => {
   };
 };
 
+export const UpdateTotalPacksCountAC = cardPacksTotalCount => {
+  return {
+    type: APP_ACTION_TYPES.APP_UPDATE_TOTAL_PACKS_COUNT,
+    payload: {
+      cardPacksTotalCount,
+    },
+  };
+};
+
 export const SearchPackNameAC = searchPackName => {
   return {
     type: APP_PACKS_TYPES.APP_SET_SEARCH_PACK_NAME,
@@ -79,10 +88,10 @@ export const UpdatePackTitleAC = (name, id) => {
   };
 };
 
-export const DeletePackAC = id => {
+export const DeletePackAC = packId => {
   return {
-    type: APP_PACKS_TYPES.APP_SET_DELETE_PAGE,
-    id,
+    type: APP_PACKS_TYPES.APP_SET_DELETE_PACK,
+    packId,
   };
 };
 
@@ -109,5 +118,21 @@ export const GetCardsAC = data => {
   return {
     type: APP_CARDS_TYPES.APP_GET_CARDS,
     data,
+  };
+};
+
+export const DeleteCardAC = cardId => {
+  return {
+    type: APP_CARDS_TYPES.APP_DELETE_CARD,
+    cardId,
+  };
+};
+
+export const UpdateTotalCardsCountAC = cardsTotalCount => {
+  return {
+    type: APP_ACTION_TYPES.APP_UPDATE_TOTAL_CARDS_COUNT,
+    payload: {
+      cardsTotalCount,
+    },
   };
 };

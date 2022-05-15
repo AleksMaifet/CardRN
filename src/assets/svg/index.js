@@ -1,1 +1,1 @@
-export {Eye} from './Eye';
+export {EyeSvg} from './Eye';

@@ -1,1 +1,6 @@
-export {FormScreen, PacksScreen, CardsScreen} from './Main/index';
+export {
+  FormScreen,
+  PacksScreen,
+  CardsScreen,
+  ProfileScreen,
+} from './Main/index';
