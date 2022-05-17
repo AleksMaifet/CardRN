@@ -11,7 +11,6 @@ export const SuperButton = memo(
       <Pressable
         style={[styles.button, {width, height, backgroundColor}]}
         onPress={onPressEvent}
-        // onSubmitEditing={onPressEvent}
       >
         <Text style={[styles.text, {color}]}>{text}</Text>
       </Pressable>

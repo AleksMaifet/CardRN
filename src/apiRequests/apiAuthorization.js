@@ -11,4 +11,7 @@ export class apiAuthorization {
   static registerUser(values) {
     return initial.post('register', values);
   }
+  static logOutUser() {
+    return initial.delete('me');
+  }
 }

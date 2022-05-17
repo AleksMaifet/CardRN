@@ -29,7 +29,7 @@ export const LoginizationTC = values => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      dispatch(IsLoadingAC('success'));
+      handleSpinnerTimerEnd(dispatch);
     }
   };
 };
@@ -46,7 +46,21 @@ export const AuthorizationTC = (values, scrollView) => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      dispatch(IsLoadingAC('success'));
+      handleSpinnerTimerEnd(dispatch);
+    }
+  };
+};
+
+export const LogOutTC = () => {
+  return async dispatch => {
+    dispatch(IsLoadingAC('loading'));
+    try {
+      await apiAuthorization.logOutUser();
+      dispatch(LoginizationAC({}));
+    } catch (err) {
+      handleServerError(err, dispatch);
+    } finally {
+      handleSpinnerTimerEnd(dispatch);
     }
   };
 };
@@ -68,7 +82,7 @@ export const GetPacksTC = () => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      dispatch(IsLoadingAC('success'));
+      handleSpinnerTimerEnd(dispatch);
     }
   };
 };
@@ -120,7 +134,7 @@ export const SetPackTC = title => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      handleSpinnerTimerEnd(dispatch);
+      handleSpinnerTimerEnd(dispatch, 800);
     }
   };
 };
@@ -158,10 +172,10 @@ export const DeletePackTC = id => {
 export const GetCardsTC = () => {
   return async (dispatch, getState) => {
     dispatch(IsLoadingAC('loading'));
-    const cardsPack_id = getState().cards.cardPackId;
-    const pageCount = getState().cards.pageCount;
+    const {cardQuestion, cardPackId, pageCount} = getState().cards;
     const params = {
-      cardsPack_id,
+      cardQuestion,
+      cardsPack_id: cardPackId,
       pageCount,
     };
     try {
@@ -170,7 +184,7 @@ export const GetCardsTC = () => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      dispatch(IsLoadingAC('success'));
+      handleSpinnerTimerEnd(dispatch);
     }
   };
 };
@@ -185,7 +199,7 @@ export const SetCardTC = card => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      handleSpinnerTimerEnd(dispatch, 1500);
+      handleSpinnerTimerEnd(dispatch, 1700);
     }
   };
 };

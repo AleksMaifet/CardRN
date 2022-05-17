@@ -2,9 +2,9 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Dimensions,
   FlatList,
+  RefreshControl,
   StyleSheet,
   View,
-  RefreshControl,
 } from 'react-native';
 import {LinearGradientWrapper} from 'src/components/LinearGradientWrapper';
 import {GeneralStyles} from 'src/assets/generalStyles';
@@ -140,11 +140,14 @@ export const PacksScreen = ({navigation}) => {
           primaryButtonText={PRIMARY_BUTTON_TEXT}
         />
       </ModalWindow>
-      <SearchComponents onPress={onPressSearchPackNameHandle} />
+      <SearchComponents
+        onPress={onPressSearchPackNameHandle}
+        backgroundColor={GeneralStyles.primary_color_second}
+      />
       <Indicator
         isShow={isLoading === 'loading'}
         size={'large'}
-        height={615}
+        height={566}
         color={GeneralStyles.border_color}
       >
         <FlatList

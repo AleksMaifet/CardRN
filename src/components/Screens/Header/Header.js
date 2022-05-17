@@ -1,23 +1,13 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, {memo} from 'react';
 import {GeneralStyles} from 'src/assets/generalStyles';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
-export const Header = ({children, title}) => {
-  const navigation = useNavigation();
+export const Header = memo(({children, title, callback, icon}) => {
   return (
     <>
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.iconStyle}
-          onPress={() => navigation.goBack()}
-        >
-          <Icon
-            name="arrow-left"
-            size={18}
-            color={GeneralStyles.text_color_second}
-          />
+        <TouchableOpacity style={styles.icon} onPress={callback}>
+          {icon}
         </TouchableOpacity>
         <View style={styles.textContainer}>
           <Text style={styles.text}>{title}</Text>
@@ -26,7 +16,7 @@ export const Header = ({children, title}) => {
       {children}
     </>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -38,10 +28,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  iconStyle: {
+  icon: {
     position: 'absolute',
     top: 20,
-    left: 10,
+    left: 20,
   },
   text: {
     fontSize: 25,

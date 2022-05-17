@@ -22,7 +22,10 @@ export const ContainerStack = () => {
         <Stack.Screen name={Screens.FORM_SCREEN} component={FormScreen} />
       ) : (
         <>
-          <Stack.Screen name={Screens.HOME_SCREEN} component={BottomTab} />
+          <Stack.Screen
+            name={Screens.BOTTOM_TAB_SCREEN}
+            component={BottomTab}
+          />
           <Stack.Screen name={Screens.CARDS_SCREEN} component={CardsScreen} />
         </>
       )}

@@ -121,6 +121,15 @@ export const GetCardsAC = data => {
   };
 };
 
+export const SearchCardQuestionNameAC = cardQuestion => {
+  return {
+    type: APP_CARDS_TYPES.APP_SET_SEARCH_CARD_QUESTION,
+    payload: {
+      cardQuestion,
+    },
+  };
+};
+
 export const DeleteCardAC = cardId => {
   return {
     type: APP_CARDS_TYPES.APP_DELETE_CARD,

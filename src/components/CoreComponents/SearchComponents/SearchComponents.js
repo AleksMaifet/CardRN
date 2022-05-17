@@ -6,7 +6,7 @@ import {GeneralStyles} from 'src/assets/generalStyles';
 
 const SEARCH_PLACEHOLDER = 'Search';
 
-export const SearchComponents = ({onPress}) => {
+export const SearchComponents = ({onPress, backgroundColor}) => {
   const [value, setValue] = useState('');
 
   const onPressSearchEvent = () => {
@@ -18,7 +18,7 @@ export const SearchComponents = ({onPress}) => {
   };
 
   return (
-    <View style={styles.searchWrapper}>
+    <View style={{...styles.searchWrapper, backgroundColor}}>
       <TouchableOpacity onPress={onPressSearchEvent}>
         <Icon
           name="search"
@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: Dimensions.get('window').width,
-    backgroundColor: GeneralStyles.primary_color_second,
   },
   icon: {
     marginHorizontal: 10,
