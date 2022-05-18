@@ -1,10 +1,17 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 
 import {Screens} from '../screens';
 import {useSelector} from 'react-redux';
 import {selectorGetToken} from 'src/store/selectors';
-import {CardsScreen, FormScreen} from 'src/components/Screens';
+import {
+  CardsScreen,
+  ChangeProfileScreen,
+  FormScreen,
+} from 'src/components/Screens';
 import {BottomTab} from 'src/navigation/tabs';
 
 export const ContainerStack = () => {
@@ -15,18 +22,39 @@ export const ContainerStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        presentation: 'transparentModal',
       }}
     >
       {!isToken ? (
-        <Stack.Screen name={Screens.FORM_SCREEN} component={FormScreen} />
+        <Stack.Screen
+          name={Screens.FORM_SCREEN}
+          component={FormScreen}
+          options={{
+            presentation: 'transparentModal',
+          }}
+        />
       ) : (
         <>
           <Stack.Screen
             name={Screens.BOTTOM_TAB_SCREEN}
             component={BottomTab}
+            options={{
+              presentation: 'transparentModal',
+            }}
           />
-          <Stack.Screen name={Screens.CARDS_SCREEN} component={CardsScreen} />
+          <Stack.Screen
+            name={Screens.CARDS_SCREEN}
+            component={CardsScreen}
+            options={{
+              presentation: 'transparentModal',
+            }}
+          />
+          <Stack.Screen
+            name={Screens.PROFILE_CHANGE_SCREEN}
+            component={ChangeProfileScreen}
+            options={{
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            }}
+          />
         </>
       )}
     </Stack.Navigator>

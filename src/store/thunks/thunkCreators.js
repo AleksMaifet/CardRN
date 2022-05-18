@@ -51,6 +51,22 @@ export const AuthorizationTC = (values, scrollView) => {
   };
 };
 
+export const UpdateUserParamTC = param => {
+  return async dispatch => {
+    dispatch(IsLoadingAC('loading'));
+    try {
+      const {
+        data: {updatedUser},
+      } = await apiAuthorization.updateUserParam(param);
+      dispatch(LoginizationAC(updatedUser));
+    } catch (err) {
+      handleServerError(err, dispatch);
+    } finally {
+      handleSpinnerTimerEnd(dispatch);
+    }
+  };
+};
+
 export const LogOutTC = () => {
   return async dispatch => {
     dispatch(IsLoadingAC('loading'));

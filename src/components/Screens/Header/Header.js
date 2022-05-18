@@ -1,6 +1,14 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {memo} from 'react';
 import {GeneralStyles} from 'src/assets/generalStyles';
+
+const {width} = Dimensions.get('window');
 
 export const Header = memo(({children, title, callback, icon}) => {
   return (
@@ -22,6 +30,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     height: 60,
+    width,
     backgroundColor: GeneralStyles.primary_color_second,
   },
   textContainer: {

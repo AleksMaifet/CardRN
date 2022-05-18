@@ -1,6 +1,7 @@
 export {
   LoginizationTC,
   AuthorizationTC,
+  UpdateUserParamTC,
   LogOutTC,
   GetPacksTC,
   SetPackTC,

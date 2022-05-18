@@ -1,26 +1,27 @@
 import React, {useCallback, useState} from 'react';
 import {GeneralStyles} from 'src/assets/generalStyles';
-import {Image, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   selectorGetAvatar,
   selectorGetName,
   selectorIsLoading,
 } from 'src/store/selectors';
-import imageUserNotFound from 'src/assets/images/imageNotFountUser.png';
 import {Indicator, SuperButton} from 'src/components/CoreComponents';
 import {LinearGradientWrapper} from 'src/components/LinearGradientWrapper';
+import {LogOutTC} from 'src/store/thunks';
 import {Header} from 'src/components/Screens/Header';
+import IconMenu from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import {DrawerContainer} from 'src/components/CoreComponents/DrawerContainer';
-import IconMenu from 'react-native-vector-icons/MaterialIcons';
-import {LogOutTC} from 'src/store/thunks';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import imageUserNotFound from 'src/assets/images/imageNotFountUser.png';
+import {Screens} from 'src/navigation/screens';
 
 const BUTTON_TITLE = 'Edit profile';
 const BUTTON_TITLE_DRAWER = 'Logout';
 const TITLE_HEADER_PROFILE = 'Profile';
 
-export const ProfileScreen = () => {
+export const ProfileScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(selectorIsLoading);
@@ -50,10 +51,10 @@ export const ProfileScreen = () => {
   return (
     <Header
       title={TITLE_HEADER_PROFILE}
+      callback={showModalHandle}
       icon={
         <IconMenu name={'menu'} size={25} color={GeneralStyles.text_color} />
       }
-      callback={showModalHandle}
     >
       <LinearGradientWrapper
         color={GeneralStyles.liner_gradient.firstColorScreen}
@@ -85,7 +86,8 @@ export const ProfileScreen = () => {
         <SuperButton
           text={BUTTON_TITLE}
           color={GeneralStyles.primary_color}
-          callback={() => {}}
+          backgroundColor={GeneralStyles.border_color}
+          callback={() => navigation.navigate(Screens.PROFILE_CHANGE_SCREEN)}
         />
       </LinearGradientWrapper>
     </Header>
@@ -106,8 +108,8 @@ const styles = StyleSheet.create({
     marginVertical: 50,
   },
   imageContainer: {
-    width: 300,
-    height: 300,
+    width: 200,
+    height: 200,
     borderRadius: 300,
     overflow: 'hidden',
   },
