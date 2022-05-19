@@ -6,6 +6,7 @@ export const SupperInput = memo(
     value,
     onChangeText,
     onSubmitEditing,
+    onEndEditing,
     placeholder,
     placeholderTextColor,
     secureTextEntry,
@@ -26,6 +27,7 @@ export const SupperInput = memo(
           value={value}
           onChangeText={onChangeText}
           onSubmitEditing={onSubmitEditing}
+          onEndEditing={onEndEditing}
           secureTextEntry={secureTextEntry}
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}

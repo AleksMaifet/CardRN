@@ -3,11 +3,7 @@ import {Header} from 'src/components/Screens/Header';
 import {GeneralStyles} from 'src/assets/generalStyles';
 import {Image, StyleSheet, View} from 'react-native';
 import imageUserNotFound from 'src/assets/images/imageNotFountUser.png';
-import {
-  Indicator,
-  SuperButton,
-  SupperInput,
-} from 'src/components/CoreComponents';
+import {Indicator, SupperInput} from 'src/components/CoreComponents';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -18,9 +14,19 @@ import {
 import {LinearGradientWrapper} from 'src/components/LinearGradientWrapper';
 import {PhotoUploadComponent} from 'src/components/SvgComponents';
 import {UpdateUserParamTC} from 'src/store/thunks';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {UploadAvatarErrorAC} from 'src/store/actions';
 
 const TITLE_HEADER_CHANGE_PROFILE = 'Personal Information';
-const BUTTON_TITLE = 'Save';
+const ERROR_UPLOAD_AVATAR_MESSAGE = 'User cancelled image picker';
+
+const options = {
+  selectionLimit: 1,
+  quality: 1,
+  mediaType: 'photo',
+  includeBase64: true,
+  includeExtra: true,
+};
 
 export const ChangeProfileScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -31,7 +37,25 @@ export const ChangeProfileScreen = ({navigation}) => {
 
   const [nameValue, setNameValue] = useState('');
 
-  const updateUserParamHandle = useCallback(() => {
+  // const newName = useDebounce(nameValue, 300);
+
+  const uploadImageHandle = async () => {
+    try {
+      const {assets} = await launchImageLibrary(options);
+      const {base64, type} = assets[0];
+      const base64Format = `data:${type};base64,${base64}`;
+      dispatch(
+        UpdateUserParamTC({
+          avatar: base64Format,
+        }),
+      );
+      navigation.goBack();
+    } catch (e) {
+      dispatch(UploadAvatarErrorAC(ERROR_UPLOAD_AVATAR_MESSAGE));
+    }
+  };
+
+  const updateUserNameHandle = useCallback(() => {
     dispatch(UpdateUserParamTC({name: nameValue}));
     navigation.goBack();
   }, [dispatch, nameValue]);
@@ -70,7 +94,7 @@ export const ChangeProfileScreen = ({navigation}) => {
                 resizeMode={'cover'}
               />
             </View>
-            <PhotoUploadComponent />
+            <PhotoUploadComponent callback={uploadImageHandle} />
           </View>
           <View style={styles.textContainer}>
             <SupperInput
@@ -79,14 +103,9 @@ export const ChangeProfileScreen = ({navigation}) => {
               onChangeText={setNameValue}
               borderColor={GeneralStyles.border_color}
               width={300}
+              onEndEditing={updateUserNameHandle}
             />
           </View>
-          <SuperButton
-            text={BUTTON_TITLE}
-            color={GeneralStyles.text_color_second}
-            backgroundColor={GeneralStyles.primary_color}
-            callback={updateUserParamHandle}
-          />
         </Indicator>
       </LinearGradientWrapper>
     </Header>

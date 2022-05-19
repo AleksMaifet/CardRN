@@ -38,16 +38,6 @@ export const ProfileScreen = ({navigation}) => {
     dispatch(LogOutTC());
   }, [dispatch]);
 
-  if (isLoading === 'loading') {
-    return (
-      <LinearGradientWrapper
-        color={GeneralStyles.liner_gradient.firstColorScreen}
-      >
-        <Indicator isShow size={'large'} color={GeneralStyles.border_color} />
-      </LinearGradientWrapper>
-    );
-  }
-
   return (
     <Header
       title={TITLE_HEADER_PROFILE}
@@ -71,24 +61,30 @@ export const ProfileScreen = ({navigation}) => {
             title={BUTTON_TITLE_DRAWER}
           />
         </Modal>
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.image}
-            source={
-              getUserAvatar ? {uri: `${getUserAvatar}`} : imageUserNotFound
-            }
-            resizeMode={'cover'}
+        <Indicator
+          isShow={isLoading === 'loading'}
+          size={'large'}
+          color={GeneralStyles.border_color}
+        >
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source={
+                getUserAvatar ? {uri: `${getUserAvatar}`} : imageUserNotFound
+              }
+              resizeMode={'cover'}
+            />
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>{getUserName}</Text>
+          </View>
+          <SuperButton
+            width={100}
+            text={BUTTON_TITLE}
+            color={GeneralStyles.primary_color}
+            callback={() => navigation.navigate(Screens.PROFILE_CHANGE_SCREEN)}
           />
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>{getUserName}</Text>
-        </View>
-        <SuperButton
-          text={BUTTON_TITLE}
-          color={GeneralStyles.primary_color}
-          backgroundColor={GeneralStyles.border_color}
-          callback={() => navigation.navigate(Screens.PROFILE_CHANGE_SCREEN)}
-        />
+        </Indicator>
       </LinearGradientWrapper>
     </Header>
   );

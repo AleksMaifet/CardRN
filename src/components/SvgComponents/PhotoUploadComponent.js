@@ -2,8 +2,10 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {PhotoSvg} from 'src/assets/svg';
 
-export const PhotoUploadComponent = ({}) => {
-  const isVisibleHandle = () => {};
+export const PhotoUploadComponent = ({callback}) => {
+  const isVisibleHandle = () => {
+    callback();
+  };
 
   return (
     <TouchableOpacity style={styles.svgEye} onPress={isVisibleHandle}>

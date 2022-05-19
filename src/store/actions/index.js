@@ -16,4 +16,5 @@ export {
   DeleteCardAC,
   UpdateTotalPacksCountAC,
   UpdateTotalCardsCountAC,
+  UploadAvatarErrorAC,
 } from './actionCreators';

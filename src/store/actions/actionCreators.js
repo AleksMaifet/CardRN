@@ -41,10 +41,12 @@ export const AuthorizationAC = signUpData => {
   };
 };
 
-export const AuthorizationErrorAC = errorMessage => {
+export const AuthorizationErrorAC = errorAuthorizationMessage => {
   return {
     type: APP_AUTHORIZATION_TYPES.APP_AUTHORIZATION_ERROR_DATA,
-    errorMessage,
+    payload: {
+      errorAuthorizationMessage,
+    },
   };
 };
 
@@ -142,6 +144,15 @@ export const UpdateTotalCardsCountAC = cardsTotalCount => {
     type: APP_ACTION_TYPES.APP_UPDATE_TOTAL_CARDS_COUNT,
     payload: {
       cardsTotalCount,
+    },
+  };
+};
+
+export const UploadAvatarErrorAC = errorUploadAvatarMessage => {
+  return {
+    type: APP_ACTION_TYPES.APP_UPLOAD_AVATAR_ERROR_DATA,
+    payload: {
+      errorUploadAvatarMessage,
     },
   };
 };

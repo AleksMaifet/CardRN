@@ -14,11 +14,7 @@ import {
   UpdateTotalCardsCountAC,
   UpdateTotalPacksCountAC,
 } from 'src/store/actions';
-import {
-  handleScrollView,
-  handleServerError,
-  handleSpinnerTimerEnd,
-} from 'src/utils';
+import {handleScrollView, handleServerError, handleTimerEnd} from 'src/utils';
 
 export const LoginizationTC = values => {
   return async dispatch => {
@@ -29,7 +25,7 @@ export const LoginizationTC = values => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      handleSpinnerTimerEnd(dispatch);
+      handleTimerEnd(dispatch);
     }
   };
 };
@@ -46,7 +42,7 @@ export const AuthorizationTC = (values, scrollView) => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      handleSpinnerTimerEnd(dispatch);
+      handleTimerEnd(dispatch);
     }
   };
 };
@@ -62,7 +58,7 @@ export const UpdateUserParamTC = param => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      handleSpinnerTimerEnd(dispatch);
+      handleTimerEnd(dispatch);
     }
   };
 };
@@ -76,7 +72,7 @@ export const LogOutTC = () => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      handleSpinnerTimerEnd(dispatch);
+      handleTimerEnd(dispatch);
     }
   };
 };
@@ -98,7 +94,7 @@ export const GetPacksTC = () => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      handleSpinnerTimerEnd(dispatch);
+      handleTimerEnd(dispatch);
     }
   };
 };
@@ -150,7 +146,7 @@ export const SetPackTC = title => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      handleSpinnerTimerEnd(dispatch, 800);
+      handleTimerEnd(dispatch, 800);
     }
   };
 };
@@ -200,7 +196,7 @@ export const GetCardsTC = () => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      handleSpinnerTimerEnd(dispatch);
+      handleTimerEnd(dispatch);
     }
   };
 };
@@ -215,7 +211,7 @@ export const SetCardTC = card => {
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      handleSpinnerTimerEnd(dispatch, 1700);
+      handleTimerEnd(dispatch, 1700);
     }
   };
 };
