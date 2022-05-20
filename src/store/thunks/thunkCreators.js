@@ -5,6 +5,7 @@ import {
   DeletePackAC,
   GetCardsAC,
   GetPacksAC,
+  IsDisableModeActiveAC,
   IsLoadingAC,
   IsLoadingRefreshListAC,
   LoginizationAC,
@@ -164,6 +165,7 @@ export const UpdatePackTitleTC = (name, id) => {
 
 export const DeletePackTC = id => {
   return async (dispatch, getState) => {
+    dispatch(IsDisableModeActiveAC(true));
     const userId = getState().authorization.signInData._id;
     const params = {
       user_id: userId,
@@ -177,6 +179,8 @@ export const DeletePackTC = id => {
       dispatch(UpdateTotalPacksCountAC(cardPacksTotalCount));
     } catch (err) {
       handleServerError(err, dispatch);
+    } finally {
+      dispatch(IsDisableModeActiveAC(false));
     }
   };
 };

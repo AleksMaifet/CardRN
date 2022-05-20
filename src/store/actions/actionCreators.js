@@ -156,3 +156,12 @@ export const UploadAvatarErrorAC = errorUploadAvatarMessage => {
     },
   };
 };
+
+export const IsDisableModeActiveAC = isDisableModeActive => {
+  return {
+    type: APP_ACTION_TYPES.APP_IS_DISABLE_MODE_ACTIVE,
+    payload: {
+      isDisableModeActive,
+    },
+  };
+};

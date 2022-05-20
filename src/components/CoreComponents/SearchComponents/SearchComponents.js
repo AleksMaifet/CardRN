@@ -3,12 +3,20 @@ import React, {useState} from 'react';
 import {SupperInput} from 'src/components/CoreComponents/Input';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {GeneralStyles} from 'src/assets/generalStyles';
+import {useSelector} from 'react-redux';
+import {
+  selectorIsDisableModeActive,
+  selectorIsLoading,
+} from 'src/store/selectors';
 
 const SEARCH_PLACEHOLDER = 'Search';
 
 const {width} = Dimensions.get('window');
 
 export const SearchComponents = ({onPress, backgroundColor}) => {
+  const isLoading = useSelector(selectorIsLoading);
+  const isDisabled = useSelector(selectorIsDisableModeActive);
+
   const [value, setValue] = useState('');
 
   const onPressSearchEvent = () => {
@@ -19,8 +27,14 @@ export const SearchComponents = ({onPress, backgroundColor}) => {
     setValue('');
   };
 
+  const isActivePointer =
+    isLoading === 'loading' || isDisabled ? 'none' : 'auto';
+
   return (
-    <View style={{...styles.searchWrapper, backgroundColor}}>
+    <View
+      pointerEvents={isActivePointer}
+      style={{...styles.searchWrapper, backgroundColor}}
+    >
       <TouchableOpacity onPress={onPressSearchEvent}>
         <Icon
           name="search"

@@ -9,6 +9,7 @@ import {
 const initState = {
   isLoading: 'idle',
   isRefreshListLoading: 'idle',
+  isDisableModeActive: false,
   packs: {
     cardPacks: [],
   },
@@ -21,6 +22,7 @@ export const appReducer = (state = initState, action) => {
   switch (action.type) {
     case APP_ACTION_TYPES.APP_IS_LOADING:
     case APP_ACTION_TYPES.APP_IS_LOADING_REFRESH_LIST:
+    case APP_ACTION_TYPES.APP_IS_DISABLE_MODE_ACTIVE:
       return {
         ...state,
         ...action.payload,

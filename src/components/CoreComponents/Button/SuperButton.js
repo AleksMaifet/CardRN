@@ -3,7 +3,15 @@ import {Pressable, StyleSheet, Text} from 'react-native';
 import {GeneralStyles} from 'src/assets/generalStyles';
 
 export const SuperButton = memo(
-  ({callback, text, width = 265, height = 36, backgroundColor, color}) => {
+  ({
+    callback,
+    text,
+    width = 265,
+    height = 36,
+    backgroundColor,
+    color,
+    disabled,
+  }) => {
     const onPressEvent = () => {
       callback();
     };
@@ -15,6 +23,7 @@ export const SuperButton = memo(
           {width, height, backgroundColor, borderRadius: 30},
         ]}
         onPress={onPressEvent}
+        disabled={disabled}
       >
         <Text style={[styles.text, {color}]}>{text}</Text>
       </Pressable>

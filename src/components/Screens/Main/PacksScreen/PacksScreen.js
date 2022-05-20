@@ -15,6 +15,7 @@ import {
   selectorGetPackSearchName,
   selectorGetPacksTotalCount,
   selectorGetPageCount,
+  selectorIsDisableModeActive,
   selectorIsLoading,
   selectorIsRefreshListLoading,
 } from 'src/store/selectors';
@@ -51,6 +52,7 @@ export const PacksScreen = ({navigation}) => {
 
   const isLoading = useSelector(selectorIsLoading);
   const isRefreshListLoading = useSelector(selectorIsRefreshListLoading);
+  const isDisabled = useSelector(selectorIsDisableModeActive);
   const getPacks = useSelector(selectorGetPacks);
   const getSearchPackName = useSelector(selectorGetPackSearchName);
   const getPageCount = useSelector(selectorGetPageCount);
@@ -162,6 +164,7 @@ export const PacksScreen = ({navigation}) => {
                 id={_id}
                 changeTitleHandle={onPressChangeTitlePackHandle}
                 deleteHandle={onPressDeletePackHandle}
+                disabled={isDisabled}
               />
             );
           }}
@@ -185,6 +188,7 @@ export const PacksScreen = ({navigation}) => {
           backgroundColor={GeneralStyles.primary_color_second}
           color={GeneralStyles.text_color_second}
           width={'100%'}
+          disabled={isLoading === 'loading'}
         />
       </View>
     </LinearGradientWrapper>

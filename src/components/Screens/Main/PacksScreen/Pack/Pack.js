@@ -12,7 +12,15 @@ const BUTTON_TEXT = 'CANCEL';
 const PRIMARY_BUTTON_TEXT = 'CHANGE';
 
 export const Pack = memo(
-  ({navigation, name, count, id, changeTitleHandle, deleteHandle}) => {
+  ({
+    navigation,
+    name,
+    count,
+    id,
+    changeTitleHandle,
+    deleteHandle,
+    disabled,
+  }) => {
     const [showModal, setShowModal] = useState(false);
 
     const showModalHandle = () => {
@@ -30,8 +38,13 @@ export const Pack = memo(
       [changeTitleHandle, id],
     );
 
+    const isDisabledColor = disabled
+      ? GeneralStyles.border_color
+      : GeneralStyles.primary_color_second;
+
     return (
       <TouchableOpacity
+        disabled={disabled}
         onPress={() => navigation.navigate(Screens.CARDS_SCREEN, {name, id})}
         style={styles.container}
       >
@@ -58,18 +71,10 @@ export const Pack = memo(
         </View>
         <View style={styles.iconsContainer}>
           <TouchableOpacity onPress={showModalHandle}>
-            <Icon
-              size={30}
-              name="pencil"
-              color={GeneralStyles.primary_color_second}
-            />
+            <Icon size={30} name="pencil" color={isDisabledColor} />
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressDeletePackEvent}>
-            <Icon
-              size={35}
-              name="eye-off"
-              color={GeneralStyles.primary_color_second}
-            />
+            <Icon size={35} name="eye-off" color={isDisabledColor} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>

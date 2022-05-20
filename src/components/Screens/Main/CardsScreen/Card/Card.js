@@ -1,13 +1,6 @@
 import React, {memo, useEffect} from 'react';
 
-import {
-  Animated,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Animated, Pressable, StyleSheet, Text, View} from 'react-native';
 import {GeneralStyles} from 'src/assets/generalStyles';
 
 const TITLE_FRONT_SIDE = 'QUESTION';
@@ -59,7 +52,7 @@ export const Card = memo(({question, answer, id, setCardId}) => {
   }, [id]);
 
   return (
-    <SafeAreaView>
+    <>
       <Pressable onPress={flipAnimation}>
         <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
           <View style={styles.container}>
@@ -86,7 +79,7 @@ export const Card = memo(({question, answer, id, setCardId}) => {
           </View>
         </Animated.View>
       </Pressable>
-    </SafeAreaView>
+    </>
   );
 });
 

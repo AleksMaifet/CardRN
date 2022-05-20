@@ -146,6 +146,7 @@ export const CardsScreen = ({route, navigation}) => {
             backgroundColor={GeneralStyles.primary_color_second}
             color={GeneralStyles.text_color_second}
             width={'100%'}
+            disabled={isLoading === 'loading'}
           />
         </View>
       </LinearGradientWrapper>
