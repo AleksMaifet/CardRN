@@ -9,10 +9,10 @@ const {width, height} = Dimensions.get('window');
 export const DrawerContainer = memo(({callback, title}) => {
   return (
     <View style={styles.container}>
-      <View style={styles.containerButton}>
+      <View style={[styles.containerButton, GeneralStyles.flexContainer]}>
         <IconDrawerOff
           name={'poweroff'}
-          size={20}
+          size={25}
           color={GeneralStyles.text_color}
         />
         <SuperButton width={150} callback={callback} text={title} />
@@ -25,15 +25,14 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'flex-end',
     height,
-    width: width - 200,
+    width: width / 2,
     backgroundColor: GeneralStyles.text_color_second,
-    padding: 20,
+    padding: 10,
     borderTopRightRadius: 30,
     borderBottomRightRadius: 30,
   },
   containerButton: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 20,
+    marginVertical: 30,
   },
 });

@@ -6,6 +6,8 @@ import {GeneralStyles} from 'src/assets/generalStyles';
 
 const SEARCH_PLACEHOLDER = 'Search';
 
+const {width} = Dimensions.get('window');
+
 export const SearchComponents = ({onPress, backgroundColor}) => {
   const [value, setValue] = useState('');
 
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
   searchWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: Dimensions.get('window').width,
+    width,
   },
   icon: {
     marginHorizontal: 10,

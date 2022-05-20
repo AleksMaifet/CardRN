@@ -14,10 +14,8 @@ export const Header = memo(({children, title, callback, icon}) => {
   return (
     <>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.icon} onPress={callback}>
-          {icon}
-        </TouchableOpacity>
-        <View style={styles.textContainer}>
+        <TouchableOpacity onPress={callback}>{icon}</TouchableOpacity>
+        <View style={[styles.textContainer, GeneralStyles.flexContainer]}>
           <Text style={styles.text}>{title}</Text>
         </View>
       </View>
@@ -28,23 +26,21 @@ export const Header = memo(({children, title, callback, icon}) => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     height: 60,
     width,
     backgroundColor: GeneralStyles.primary_color_second,
   },
   textContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  icon: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
+    width: width / 1.2,
+    paddingRight: '10%',
   },
   text: {
     fontSize: 25,
-    fontWeight: 'bold',
+    fontFamily: GeneralStyles.fontFamily,
+    fontWeight: GeneralStyles.fontWeight,
     color: GeneralStyles.liner_gradient.firstColorScreen[1],
   },
 });

@@ -3,5 +3,5 @@ export {
   PacksScreen,
   CardsScreen,
   ProfileScreen,
-  ChangeProfileScreen,
+  ProfileChangeScreen,
 } from './Main/index';

@@ -41,7 +41,9 @@ export const ModalScreenPack = memo(
 
     return (
       <>
-        <Text style={{...styles.text, fontWeight: '700'}}>{titleText}</Text>
+        <Text style={{...styles.text, fontWeight: GeneralStyles.fontWeight}}>
+          {titleText}
+        </Text>
         <Text style={styles.textStyle}>{preTitleText}</Text>
         <SupperInput
           value={value}

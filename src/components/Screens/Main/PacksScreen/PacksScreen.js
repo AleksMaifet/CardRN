@@ -37,13 +37,14 @@ import {ModalScreenPack} from 'src/components/ModalWindow/ModalScreens';
 import {Pack} from 'src/components/Screens/Main/PacksScreen/Pack';
 
 const BUTTON_VALUE = 'ADD PACK';
-
 const TITLE_TEXT = 'New Pack';
 const PRE_TITLE_TEXT = 'Enter a name';
 const BUTTON_TEXT = 'CANCEL';
 const PRIMARY_BUTTON_TEXT = 'CREATE';
 
 const START_PAGE_VALUE = 2;
+
+const {width} = Dimensions.get('window');
 
 export const PacksScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -192,7 +193,7 @@ export const PacksScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   buttonWrapper: {
-    width: Dimensions.get('window').width,
+    width,
     paddingHorizontal: 10,
     marginVertical: 20,
   },

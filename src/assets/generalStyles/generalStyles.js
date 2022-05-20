@@ -5,7 +5,12 @@ export const GeneralStyles = {
   primary_color: '#21268F',
   primary_color_second: '#f66',
   primary_color_third: '#954AA1',
-  font_weight: '600',
+  fontWeight: 'bold',
+  fontFamily: 'Poppins-Bold',
+  flexContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   error_text: {
     color: 'crimson',
     fontWeight: 'bold',

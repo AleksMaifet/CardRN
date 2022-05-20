@@ -1,5 +1,6 @@
 import React, {memo} from 'react';
 import {Pressable, StyleSheet, Text} from 'react-native';
+import {GeneralStyles} from 'src/assets/generalStyles';
 
 export const SuperButton = memo(
   ({callback, text, width = 265, height = 36, backgroundColor, color}) => {
@@ -9,7 +10,10 @@ export const SuperButton = memo(
 
     return (
       <Pressable
-        style={[styles.button, {width, height, backgroundColor}]}
+        style={[
+          GeneralStyles.flexContainer,
+          {width, height, backgroundColor, borderRadius: 30},
+        ]}
         onPress={onPressEvent}
       >
         <Text style={[styles.text, {color}]}>{text}</Text>
@@ -19,16 +23,10 @@ export const SuperButton = memo(
 );
 
 const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 30,
-  },
   text: {
     alignItems: 'center',
-    fontWeight: 'bold',
-    fontSize: 16,
-    lineHeight: 19,
-    fontFamily: 'Poppins-Bold',
+    fontWeight: GeneralStyles.fontWeight,
+    fontSize: 20,
+    fontFamily: GeneralStyles.fontFamily,
   },
 });

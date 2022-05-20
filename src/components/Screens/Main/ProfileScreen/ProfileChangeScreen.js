@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Header} from 'src/components/Screens/Header';
 import {GeneralStyles} from 'src/assets/generalStyles';
-import {Image, StyleSheet, View} from 'react-native';
-import imageUserNotFound from 'src/assets/images/imageNotFountUser.png';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Indicator, SupperInput} from 'src/components/CoreComponents';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import ArrowIcon from 'react-native-vector-icons/FontAwesome';
+import PlusIcon from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   selectorGetAvatar,
@@ -16,6 +16,7 @@ import {PhotoUploadComponent} from 'src/components/SvgComponents';
 import {UpdateUserParamTC} from 'src/store/thunks';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {UploadAvatarErrorAC} from 'src/store/actions';
+import {ImageComponent} from 'src/components/ImageComponent';
 
 const TITLE_HEADER_CHANGE_PROFILE = 'Personal Information';
 const ERROR_UPLOAD_AVATAR_MESSAGE = 'User cancelled image picker';
@@ -28,7 +29,7 @@ const options = {
   includeExtra: true,
 };
 
-export const ChangeProfileScreen = ({navigation}) => {
+export const ProfileChangeScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(selectorIsLoading);
@@ -36,8 +37,6 @@ export const ChangeProfileScreen = ({navigation}) => {
   const getUserName = useSelector(selectorGetName);
 
   const [nameValue, setNameValue] = useState('');
-
-  // const newName = useDebounce(nameValue, 300);
 
   const uploadImageHandle = async () => {
     try {
@@ -68,9 +67,9 @@ export const ChangeProfileScreen = ({navigation}) => {
     <Header
       title={TITLE_HEADER_CHANGE_PROFILE}
       icon={
-        <Icon
+        <ArrowIcon
           name="arrow-left"
-          size={18}
+          size={20}
           color={GeneralStyles.text_color_second}
         />
       }
@@ -85,26 +84,27 @@ export const ChangeProfileScreen = ({navigation}) => {
           color={GeneralStyles.border_color}
         >
           <View>
-            <View style={styles.imageContainer}>
-              <Image
-                style={styles.image}
-                source={
-                  getUserAvatar ? {uri: `${getUserAvatar}`} : imageUserNotFound
-                }
-                resizeMode={'cover'}
-              />
-            </View>
+            <ImageComponent width={200} height={200} avatar={getUserAvatar} />
             <PhotoUploadComponent callback={uploadImageHandle} />
           </View>
-          <View style={styles.textContainer}>
+          <View style={styles.inputContainer}>
             <SupperInput
               placeholder={'Nickname'}
               value={nameValue}
               onChangeText={setNameValue}
               borderColor={GeneralStyles.border_color}
-              width={300}
+              width={200}
               onEndEditing={updateUserNameHandle}
+              multiline
+              numberOfLines={1}
             />
+            <TouchableOpacity onPress={updateUserNameHandle}>
+              <PlusIcon
+                name="pluscircleo"
+                size={30}
+                color={GeneralStyles.text_color_second}
+              />
+            </TouchableOpacity>
           </View>
         </Indicator>
       </LinearGradientWrapper>
@@ -116,20 +116,12 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     color: GeneralStyles.text_color,
-    fontFamily: 'Poppins-Bold',
+    fontFamily: GeneralStyles.fontFamily,
   },
-  textContainer: {
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: 50,
-    marginVertical: 30,
-  },
-  imageContainer: {
-    width: 200,
-    height: 200,
-    borderRadius: 300,
-    overflow: 'hidden',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
+    marginVertical: 20,
   },
 });

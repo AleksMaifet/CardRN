@@ -9,7 +9,7 @@ import {useSelector} from 'react-redux';
 import {selectorGetToken} from 'src/store/selectors';
 import {
   CardsScreen,
-  ChangeProfileScreen,
+  ProfileChangeScreen,
   FormScreen,
 } from 'src/components/Screens';
 import {BottomTab} from 'src/navigation/tabs';
@@ -50,7 +50,7 @@ export const ContainerStack = () => {
           />
           <Stack.Screen
             name={Screens.PROFILE_CHANGE_SCREEN}
-            component={ChangeProfileScreen}
+            component={ProfileChangeScreen}
             options={{
               cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}

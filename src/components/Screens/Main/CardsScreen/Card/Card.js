@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    fontFamily: 'Poppins-Bold',
+    fontFamily: GeneralStyles.fontFamily,
     textAlign: 'center',
   },
   strip: {

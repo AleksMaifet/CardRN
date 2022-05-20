@@ -27,9 +27,7 @@ const {width, height} = Dimensions.get('window');
 const PLACEHOLDER_TEXT = 'Enter a question';
 const PRIMARY_PLACEHOLDER_TEXT = 'Enter an answer';
 const BUTTON_TEXT = 'SAVE';
-
 const BUTTON_VALUE = 'ADD CARD';
-
 const SWIPE_CARD_DELETE = 'DELETE!';
 const SWIPE_CARD_NEXT = 'NEXT!';
 
@@ -112,7 +110,7 @@ export const CardsScreen = ({route, navigation}) => {
         <Indicator
           isShow={isLoading === 'loading'}
           size={'large'}
-          height={height - 225}
+          height={height / 1.41}
           color={GeneralStyles.border_color}
         >
           <SwipeCards

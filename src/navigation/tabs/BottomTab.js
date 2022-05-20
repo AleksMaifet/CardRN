@@ -2,13 +2,17 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Screens} from 'src/navigation/screens';
 import {PacksScreen, ProfileScreen} from 'src/components/Screens';
-import IconProfile from 'react-native-vector-icons/AntDesign';
 import IconPack from 'react-native-vector-icons/MaterialCommunityIcons';
 import {GeneralStyles} from 'src/assets/generalStyles';
+import {ImageComponent} from 'src/components/ImageComponent';
+import {useSelector} from 'react-redux';
+import {selectorGetAvatar} from 'src/store/selectors';
 
 const Tab = createBottomTabNavigator();
 
 export const BottomTab = () => {
+  const getUserAvatar = useSelector(selectorGetAvatar);
+
   return (
     <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false}}>
       <Tab.Screen
@@ -26,7 +30,14 @@ export const BottomTab = () => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({color, size}) => {
-            return <IconProfile size={size} name="user" color={color} />;
+            return (
+              <ImageComponent
+                width={size}
+                height={size}
+                avatar={getUserAvatar}
+                borderColor={color}
+              />
+            );
           },
           tabBarActiveTintColor: GeneralStyles.text_color,
         }}

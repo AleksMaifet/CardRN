@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {GeneralStyles} from 'src/assets/generalStyles';
 
 export const CheckBox = ({
   onChange,
@@ -22,6 +23,7 @@ export const CheckBox = ({
       <View
         style={[
           styles.mainBox,
+          GeneralStyles.flexContainer,
           {borderColor},
           {
             backgroundColor: !isCheck ? borderColor : primary_borderColor,
@@ -30,8 +32,7 @@ export const CheckBox = ({
       >
         <View
           style={[
-            styles.inputBox,
-            {backgroundColor},
+            {backgroundColor, borderRadius: 99},
             {
               height: !isCheck ? 20 : 15,
               width: !isCheck ? 20 : 15,
@@ -45,13 +46,8 @@ export const CheckBox = ({
 
 const styles = StyleSheet.create({
   mainBox: {
-    alignItems: 'center',
-    justifyContent: 'center',
     height: 24,
     width: 24,
-    borderRadius: 99,
-  },
-  inputBox: {
     borderRadius: 99,
   },
 });

@@ -26,11 +26,17 @@ export const FormScreen = () => {
 
   const sinInColorInterpolate = animation.interpolate({
     inputRange: [0, width],
-    outputRange: ['red', 'pink'],
+    outputRange: [
+      GeneralStyles.primary_color_second,
+      GeneralStyles.liner_gradient.firstColorScreen[1],
+    ],
   });
   const sinUpColorInterpolate = animation.interpolate({
     inputRange: [0, width],
-    outputRange: ['pink', 'red'],
+    outputRange: [
+      GeneralStyles.liner_gradient.firstColorScreen[1],
+      GeneralStyles.primary_color_second,
+    ],
   });
 
   return (

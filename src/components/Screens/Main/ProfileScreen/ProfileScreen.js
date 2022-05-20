@@ -13,9 +13,9 @@ import {Header} from 'src/components/Screens/Header';
 import IconMenu from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import {DrawerContainer} from 'src/components/CoreComponents/DrawerContainer';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import imageUserNotFound from 'src/assets/images/imageNotFountUser.png';
+import {StyleSheet, Text, View} from 'react-native';
 import {Screens} from 'src/navigation/screens';
+import {ImageComponent} from 'src/components/ImageComponent';
 
 const BUTTON_TITLE = 'Edit profile';
 const BUTTON_TITLE_DRAWER = 'Logout';
@@ -43,38 +43,30 @@ export const ProfileScreen = ({navigation}) => {
       title={TITLE_HEADER_PROFILE}
       callback={showModalHandle}
       icon={
-        <IconMenu name={'menu'} size={25} color={GeneralStyles.text_color} />
+        <IconMenu name={'menu'} size={30} color={GeneralStyles.text_color} />
       }
     >
       <LinearGradientWrapper
         color={GeneralStyles.liner_gradient.firstColorScreen}
       >
-        <Modal
-          isVisible={isModalVisible}
-          onBackdropPress={showModalHandle}
-          animationIn="slideInLeft"
-          animationOut="slideOutLeft"
-          style={styles.view}
-        >
-          <DrawerContainer
-            callback={logOutHandle}
-            title={BUTTON_TITLE_DRAWER}
-          />
-        </Modal>
         <Indicator
           isShow={isLoading === 'loading'}
           size={'large'}
           color={GeneralStyles.border_color}
         >
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={
-                getUserAvatar ? {uri: `${getUserAvatar}`} : imageUserNotFound
-              }
-              resizeMode={'cover'}
+          <Modal
+            isVisible={isModalVisible}
+            onBackdropPress={showModalHandle}
+            animationIn="slideInLeft"
+            animationOut="slideOutLeft"
+            style={styles.view}
+          >
+            <DrawerContainer
+              callback={logOutHandle}
+              title={BUTTON_TITLE_DRAWER}
             />
-          </View>
+          </Modal>
+          <ImageComponent width={250} height={250} avatar={getUserAvatar} />
           <View style={styles.textContainer}>
             <Text style={styles.text}>{getUserName}</Text>
           </View>
@@ -95,22 +87,13 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   text: {
-    fontSize: 18,
+    fontSize: 38,
     color: GeneralStyles.text_color,
-    fontFamily: 'Poppins-Bold',
+    fontFamily: GeneralStyles.fontFamily,
+    fontWeight: GeneralStyles.fontWeight,
   },
   textContainer: {
     paddingHorizontal: 50,
-    marginVertical: 50,
-  },
-  imageContainer: {
-    width: 200,
-    height: 200,
-    borderRadius: 300,
-    overflow: 'hidden',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
+    marginVertical: 20,
   },
 });

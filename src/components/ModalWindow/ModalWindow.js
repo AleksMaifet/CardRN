@@ -2,6 +2,8 @@ import {Dimensions, Modal, Pressable, StyleSheet, View} from 'react-native';
 import React, {memo} from 'react';
 import {GeneralStyles} from 'src/assets/generalStyles';
 
+const {width} = Dimensions.get('window');
+
 export const ModalWindow = memo(
   ({
     children,
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.3)',
   },
   modalContainerStyle: {
-    width: Dimensions.get('window').width - 50,
+    width: width / 1.1,
     backgroundColor: GeneralStyles.text_color_second,
     padding: 20,
     marginVertical: 20,

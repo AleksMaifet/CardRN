@@ -1,5 +1,6 @@
 import React, {memo} from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
+import {GeneralStyles} from 'src/assets/generalStyles';
 
 export const SupperInput = memo(
   ({
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   input: {
     borderBottomWidth: 1,
     marginVertical: 5,
-    fontWeight: 'bold',
-    fontSize: 15,
+    fontWeight: GeneralStyles.fontWeight,
+    fontSize: 18,
   },
 });

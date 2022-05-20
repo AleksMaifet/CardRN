@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     textAlign: 'center',
-    fontWeight: '700',
-    fontFamily: 'Poppins-Bold',
+    fontWeight: GeneralStyles.fontWeight,
+    fontFamily: GeneralStyles.fontFamily,
     color: GeneralStyles.liner_gradient.firstColorScreen[1],
     fontSize: 30,
   },
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   count: {
     color: 'pink',
     fontSize: 15,
-    fontFamily: 'Poppins-Bold',
+    fontFamily: GeneralStyles.fontFamily,
   },
   iconsContainer: {
     flexDirection: 'row',
