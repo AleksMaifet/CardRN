@@ -1,9 +1,4 @@
-import {
-  applyMiddleware,
-  combineReducers,
-  compose,
-  legacy_createStore as createStore,
-} from 'redux';
+import {combineReducers} from 'redux';
 import {
   appAuthorizationReducer,
   appCardsReducer,
@@ -13,8 +8,9 @@ import {
 } from './reducers';
 import Reactotron from 'src/config/reactotronConfig';
 import thunk from 'redux-thunk';
+import {configureStore} from '@reduxjs/toolkit';
 
-const reducers = combineReducers({
+const rootReducers = combineReducers({
   app: appReducer,
   authorization: appAuthorizationReducer,
   error: appErrorReducer,
@@ -22,7 +18,8 @@ const reducers = combineReducers({
   cards: appCardsReducer,
 });
 
-export const store = createStore(
-  reducers,
-  compose(applyMiddleware(thunk), Reactotron.createEnhancer()),
-);
+export const store = configureStore({
+  reducer: rootReducers,
+  middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunk),
+  enhancers: [Reactotron.createEnhancer()],
+});

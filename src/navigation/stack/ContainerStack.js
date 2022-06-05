@@ -6,17 +6,18 @@ import {
 
 import {Screens} from '../screens';
 import {useSelector} from 'react-redux';
-import {selectorGetToken} from 'src/store/selectors';
+import {selectGetToken} from 'src/store/selectors';
 import {
   CardsScreen,
-  ProfileChangeScreen,
   FormScreen,
+  ProfileChangeScreen,
 } from 'src/components/Screens';
 import {BottomTab} from 'src/navigation/tabs';
 
+const Stack = createStackNavigator();
+
 export const ContainerStack = () => {
-  const Stack = createStackNavigator();
-  const isToken = useSelector(selectorGetToken);
+  const isToken = useSelector(selectGetToken);
 
   return (
     <Stack.Navigator
@@ -35,7 +36,7 @@ export const ContainerStack = () => {
       ) : (
         <>
           <Stack.Screen
-            name={Screens.BOTTOM_TAB_SCREEN}
+            name={Screens.BOTTOM_TAB_SCREENS}
             component={BottomTab}
             options={{
               presentation: 'transparentModal',

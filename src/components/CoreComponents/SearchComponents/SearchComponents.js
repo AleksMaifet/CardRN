@@ -1,21 +1,15 @@
-import {Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {SupperInput} from 'src/components/CoreComponents/Input';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {GeneralStyles} from 'src/assets/generalStyles';
+import {COLORS, SIZES, styles} from 'src/assets/generalStyles';
 import {useSelector} from 'react-redux';
-import {
-  selectorIsDisableModeActive,
-  selectorIsLoading,
-} from 'src/store/selectors';
+import {selectIsLoading} from 'src/store/selectors';
 
 const SEARCH_PLACEHOLDER = 'Search';
 
-const {width} = Dimensions.get('window');
-
 export const SearchComponents = ({onPress, backgroundColor}) => {
-  const isLoading = useSelector(selectorIsLoading);
-  const isDisabled = useSelector(selectorIsDisableModeActive);
+  const isLoading = useSelector(selectIsLoading);
 
   const [value, setValue] = useState('');
 
@@ -27,20 +21,26 @@ export const SearchComponents = ({onPress, backgroundColor}) => {
     setValue('');
   };
 
-  const isActivePointer =
-    isLoading === 'loading' || isDisabled ? 'none' : 'auto';
+  const isActivePointer = isLoading === 'loading' ? 'none' : 'auto';
 
   return (
     <View
       pointerEvents={isActivePointer}
-      style={{...styles.searchWrapper, backgroundColor}}
+      style={[
+        styles.flexContainer,
+        {
+          flexDirection: 'row',
+          width: SIZES.width,
+          backgroundColor,
+        },
+      ]}
     >
       <TouchableOpacity onPress={onPressSearchEvent}>
         <Icon
           name="search"
           size={18}
-          color={GeneralStyles.text_color_second}
-          style={styles.icon}
+          color={COLORS.secondary}
+          style={{marginHorizontal: 10}}
         />
       </TouchableOpacity>
       <SupperInput
@@ -49,27 +49,16 @@ export const SearchComponents = ({onPress, backgroundColor}) => {
         onSubmitEditing={onPressSearchEvent}
         placeholder={SEARCH_PLACEHOLDER}
         keyType={'search'}
-        placeholderTextColor={GeneralStyles.text_color_second}
+        placeholderTextColor={COLORS.secondary}
       />
       <TouchableOpacity onPress={onPressCleanEvent}>
         <Icon
           name="close"
           size={20}
-          color={GeneralStyles.text_color_second}
-          style={styles.icon}
+          color={COLORS.secondary}
+          style={{marginHorizontal: 10}}
         />
       </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  searchWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width,
-  },
-  icon: {
-    marginHorizontal: 10,
-  },
-});

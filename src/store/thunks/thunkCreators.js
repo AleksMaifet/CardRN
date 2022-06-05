@@ -1,28 +1,24 @@
 import {apiAuthorization, apiCard, apiPack} from 'src/apiRequests';
+import {handleScrollView, handleServerError, handleTimerEnd} from 'src/utils';
 import {
   AuthorizationAC,
   DeleteCardAC,
-  DeletePackAC,
   GetCardsAC,
   GetPacksAC,
-  IsDisableModeActiveAC,
   IsLoadingAC,
   IsLoadingRefreshListAC,
   LoginizationAC,
-  SetMaxCountPageAC,
   SetNextPackAC,
   UpdatePackTitleAC,
   UpdateTotalCardsCountAC,
-  UpdateTotalPacksCountAC,
-} from 'src/store/actions';
-import {handleScrollView, handleServerError, handleTimerEnd} from 'src/utils';
+} from 'src/store/reducers';
 
 export const LoginizationTC = values => {
   return async dispatch => {
-    dispatch(IsLoadingAC('loading'));
+    dispatch(IsLoadingAC({isLoading: 'loading'}));
     try {
       const {data} = await apiAuthorization.setLoginUser(values);
-      dispatch(LoginizationAC(data));
+      dispatch(LoginizationAC({data}));
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
@@ -33,12 +29,12 @@ export const LoginizationTC = values => {
 
 export const AuthorizationTC = (values, scrollView) => {
   return async dispatch => {
-    dispatch(IsLoadingAC('loading'));
+    dispatch(IsLoadingAC({isLoading: 'loading'}));
     try {
       const {
         data: {addedUser},
       } = await apiAuthorization.registerUser(values);
-      dispatch(AuthorizationAC(addedUser));
+      dispatch(AuthorizationAC({data: addedUser}));
       handleScrollView(scrollView, 0);
     } catch (err) {
       handleServerError(err, dispatch);
@@ -50,12 +46,12 @@ export const AuthorizationTC = (values, scrollView) => {
 
 export const UpdateUserParamTC = param => {
   return async dispatch => {
-    dispatch(IsLoadingAC('loading'));
+    dispatch(IsLoadingAC({isLoading: 'loading'}));
     try {
       const {
         data: {updatedUser},
       } = await apiAuthorization.updateUserParam(param);
-      dispatch(LoginizationAC(updatedUser));
+      dispatch(LoginizationAC({data: updatedUser}));
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
@@ -66,10 +62,11 @@ export const UpdateUserParamTC = param => {
 
 export const LogOutTC = () => {
   return async dispatch => {
-    dispatch(IsLoadingAC('loading'));
+    dispatch(IsLoadingAC({isLoading: 'loading'}));
     try {
+      dispatch(LoginizationAC({data: {}}));
+      dispatch(AuthorizationAC({data: {}}));
       await apiAuthorization.logOutUser();
-      dispatch(LoginizationAC({}));
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
@@ -80,18 +77,18 @@ export const LogOutTC = () => {
 
 export const GetPacksTC = () => {
   return async (dispatch, getState) => {
-    dispatch(IsLoadingAC('loading'));
+    dispatch(IsLoadingAC({isLoading: 'loading'}));
     const userId = getState().authorization.signInData._id;
     const packName = getState().packs.searchPackName;
+    const pageCount = getState().packs.pageCount;
     const params = {
+      pageCount,
       user_id: userId,
       packName,
     };
     try {
       const {data} = await apiPack.getUserPacks(params);
-      const {pageCount, cardPacksTotalCount} = data;
-      dispatch(GetPacksAC(data));
-      dispatch(SetMaxCountPageAC(pageCount, cardPacksTotalCount));
+      dispatch(GetPacksAC({packs: data}));
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
@@ -102,22 +99,22 @@ export const GetPacksTC = () => {
 
 export const RefreshPacksTC = () => {
   return async (dispatch, getState) => {
-    dispatch(IsLoadingRefreshListAC('loading'));
+    dispatch(IsLoadingRefreshListAC({isLoading: 'loading'}));
     const userId = getState().authorization.signInData._id;
     const packName = getState().packs.searchPackName;
+    const pageCount = getState().packs.pageCount;
     const params = {
+      pageCount,
       user_id: userId,
       packName,
     };
     try {
       const {data} = await apiPack.getUserPacks(params);
-      const {pageCount, cardPacksTotalCount} = data;
-      dispatch(GetPacksAC(data));
-      dispatch(SetMaxCountPageAC(pageCount, cardPacksTotalCount));
+      dispatch(GetPacksAC({packs: data}));
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
-      dispatch(IsLoadingRefreshListAC('success'));
+      dispatch(IsLoadingRefreshListAC({isLoading: 'success'}));
     }
   };
 };
@@ -125,13 +122,15 @@ export const RefreshPacksTC = () => {
 export const GetNextPackTC = page => {
   return async (dispatch, getState) => {
     const userId = getState().authorization.signInData._id;
+    const pageCount = getState().packs.pageCount;
     const params = {
+      pageCount,
       page,
       user_id: userId,
     };
     try {
       const {data} = await apiPack.getUserPacks(params);
-      dispatch(SetNextPackAC(data));
+      dispatch(SetNextPackAC({data}));
     } catch (err) {
       handleServerError(err, dispatch);
     }
@@ -140,7 +139,7 @@ export const GetNextPackTC = page => {
 
 export const SetPackTC = title => {
   return async dispatch => {
-    dispatch(IsLoadingAC('loading'));
+    dispatch(IsLoadingAC({isLoading: 'loading'}));
     try {
       await apiPack.setUserPack(title);
       dispatch(GetPacksTC());
@@ -156,7 +155,7 @@ export const UpdatePackTitleTC = (name, id) => {
   return async dispatch => {
     try {
       await apiPack.updateUserPack(id, name);
-      dispatch(UpdatePackTitleAC(name, id));
+      dispatch(UpdatePackTitleAC({name, id}));
     } catch (err) {
       handleServerError(err, dispatch);
     }
@@ -164,39 +163,30 @@ export const UpdatePackTitleTC = (name, id) => {
 };
 
 export const DeletePackTC = id => {
-  return async (dispatch, getState) => {
-    dispatch(IsDisableModeActiveAC(true));
-    const userId = getState().authorization.signInData._id;
-    const params = {
-      user_id: userId,
-    };
+  return async dispatch => {
+    dispatch(IsLoadingAC({isLoading: 'loading'}));
     try {
-      dispatch(DeletePackAC(id));
       await apiPack.deleteUserPack(id);
-      const {
-        data: {cardPacksTotalCount},
-      } = await apiPack.getUserPacks(params);
-      dispatch(UpdateTotalPacksCountAC(cardPacksTotalCount));
+      dispatch(GetPacksTC());
     } catch (err) {
       handleServerError(err, dispatch);
-    } finally {
-      dispatch(IsDisableModeActiveAC(false));
     }
   };
 };
 
 export const GetCardsTC = () => {
   return async (dispatch, getState) => {
-    dispatch(IsLoadingAC('loading'));
-    const {cardQuestion, cardPackId, pageCount} = getState().cards;
+    dispatch(IsLoadingAC({isLoading: 'loading'}));
+    const cardsPack_id = getState().packs.pack._id;
+    const {cardQuestion, pageCount} = getState().cards;
     const params = {
       cardQuestion,
-      cardsPack_id: cardPackId,
+      cardsPack_id,
       pageCount,
     };
     try {
       const {data} = await apiCard.getUserCards(params);
-      dispatch(GetCardsAC(data));
+      dispatch(GetCardsAC({cards: data}));
     } catch (err) {
       handleServerError(err, dispatch);
     } finally {
@@ -207,8 +197,8 @@ export const GetCardsTC = () => {
 
 export const SetCardTC = card => {
   return async (dispatch, getState) => {
-    dispatch(IsLoadingAC('loading'));
-    const cardsPack_id = getState().cards.cardPackId;
+    dispatch(IsLoadingAC({isLoading: 'loading'}));
+    const cardsPack_id = getState().packs.pack._id;
     try {
       await apiCard.setUserCard({...card, cardsPack_id});
       dispatch(GetCardsTC());
@@ -222,17 +212,17 @@ export const SetCardTC = card => {
 
 export const DeleteCardTC = cardId => {
   return async (dispatch, getState) => {
-    const cardsPack_id = getState().cards.cardPackId;
+    const cardsPack_id = getState().packs.pack._id;
     const params = {
       cardsPack_id,
     };
     try {
-      dispatch(DeleteCardAC(cardId));
+      dispatch(DeleteCardAC({id: cardId}));
       await apiCard.deleteUserCard(cardId);
       const {
         data: {cardsTotalCount},
       } = await apiCard.getUserCards(params);
-      dispatch(UpdateTotalCardsCountAC(cardsTotalCount));
+      dispatch(UpdateTotalCardsCountAC({cardsTotalCount}));
     } catch (err) {
       handleServerError(err, dispatch);
     }

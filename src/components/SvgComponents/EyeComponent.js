@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {EyeSvg} from 'src/assets/svg';
 
 export const EyeComponent = ({isSecureText}) => {
@@ -8,16 +8,11 @@ export const EyeComponent = ({isSecureText}) => {
   };
 
   return (
-    <TouchableOpacity style={styles.svgEye} onPress={isVisibleHandle}>
+    <TouchableOpacity
+      style={{position: 'absolute', top: '40%', right: '5%'}}
+      onPress={isVisibleHandle}
+    >
       <EyeSvg />
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  svgEye: {
-    position: 'absolute',
-    top: '40%',
-    right: '5%',
-  },
-});

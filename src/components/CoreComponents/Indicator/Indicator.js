@@ -1,10 +1,10 @@
 import {ActivityIndicator, View} from 'react-native';
 import React, {memo} from 'react';
-import {GeneralStyles} from 'src/assets/generalStyles';
+import {styles} from 'src/assets/generalStyles';
 
 export const Indicator = memo(({children, isShow, size, color, height}) => {
   return isShow ? (
-    <View style={[GeneralStyles.flexContainer, {height}]}>
+    <View style={[styles.flexContainer, {height}]}>
       <ActivityIndicator size={size} color={color} />
     </View>
   ) : (

@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
-import {GeneralStyles} from 'src/assets/generalStyles';
+import {TextInput, View} from 'react-native';
+import {styles} from 'src/assets/generalStyles';
 
 export const SupperInput = memo(
   ({
@@ -38,8 +38,8 @@ export const SupperInput = memo(
           numberOfLines={numberOfLines}
           autoFocus={autoFocus}
           style={[
-            styles.input,
-            {width},
+            styles.fonts.body3,
+            {width, borderBottomWidth: 1, marginVertical: 5},
             isError ? {borderColor: errorBorderColor} : {borderColor},
           ]}
         />
@@ -48,12 +48,3 @@ export const SupperInput = memo(
     );
   },
 );
-
-const styles = StyleSheet.create({
-  input: {
-    borderBottomWidth: 1,
-    marginVertical: 5,
-    fontWeight: GeneralStyles.fontWeight,
-    fontSize: 18,
-  },
-});

@@ -1,11 +1,11 @@
 import React, {useRef} from 'react';
 
-import {Animated, Dimensions, ScrollView, StyleSheet, View} from 'react-native';
+import {Animated, ScrollView, View} from 'react-native';
 import {LinearGradientWrapper} from 'src/components/LinearGradientWrapper';
-import {GeneralStyles} from 'src/assets/generalStyles';
+import {COLORS, SIZES, styles} from 'src/assets/generalStyles';
 import {handleScrollView} from 'src/utils';
 import {useSelector} from 'react-redux';
-import {selectorIsLoading} from 'src/store/selectors';
+import {selectIsLoading} from 'src/store/selectors';
 import {Indicator} from 'src/components/CoreComponents';
 import {
   FormIn,
@@ -16,41 +16,31 @@ import {
 const TITLE_TEXT_IN = 'Sign In';
 const TITLE_TEXT_UP = 'Sign Up';
 
-const {width} = Dimensions.get('window');
-
 export const FormScreen = () => {
-  const isLoading = useSelector(selectorIsLoading);
+  const isLoading = useSelector(selectIsLoading);
 
   const animation = useRef(new Animated.Value(0)).current;
   const scrollView = useRef();
 
   const sinInColorInterpolate = animation.interpolate({
-    inputRange: [0, width],
-    outputRange: [
-      GeneralStyles.primary_color_second,
-      GeneralStyles.liner_gradient.firstColorScreen[1],
-    ],
+    inputRange: [0, SIZES.width],
+    outputRange: [COLORS.red, COLORS.purplish_pink],
   });
   const sinUpColorInterpolate = animation.interpolate({
-    inputRange: [0, width],
-    outputRange: [
-      GeneralStyles.liner_gradient.firstColorScreen[1],
-      GeneralStyles.primary_color_second,
-    ],
+    inputRange: [0, SIZES.width],
+    outputRange: [COLORS.purplish_pink, COLORS.red],
   });
 
   return (
-    <LinearGradientWrapper
-      color={GeneralStyles.liner_gradient.firstColorScreen}
-    >
-      <View style={styles.formContainer}>
+    <LinearGradientWrapper color={styles.liner_gradient.firstColorScreen}>
+      <View style={{paddingTop: '40%'}}>
         <Indicator
           isShow={isLoading === 'loading'}
           size={'large'}
-          color={GeneralStyles.border_color}
+          color={COLORS.gray}
           height={50}
         />
-        <View style={styles.titleContainer}>
+        <View style={{flexDirection: 'row', paddingHorizontal: 15}}>
           <FormTitle
             title={TITLE_TEXT_IN}
             onPress={() => handleScrollView(scrollView, 0)}
@@ -58,7 +48,7 @@ export const FormScreen = () => {
           />
           <FormTitle
             title={TITLE_TEXT_UP}
-            onPress={() => handleScrollView(scrollView, width)}
+            onPress={() => handleScrollView(scrollView, SIZES.width)}
             backgroundColor={sinUpColorInterpolate}
           />
         </View>
@@ -74,10 +64,10 @@ export const FormScreen = () => {
             {useNativeDriver: false},
           )}
         >
-          <View style={styles.form}>
+          <View style={{alignItems: 'center', width: SIZES.width}}>
             <FormIn />
           </View>
-          <View style={styles.form}>
+          <View style={{alignItems: 'center', width: SIZES.width}}>
             <FormUp scrollView={scrollView} />
           </View>
         </ScrollView>
@@ -85,17 +75,3 @@ export const FormScreen = () => {
     </LinearGradientWrapper>
   );
 };
-
-const styles = StyleSheet.create({
-  formContainer: {
-    paddingTop: '40%',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: 15,
-  },
-  form: {
-    alignItems: 'center',
-    width,
-  },
-});

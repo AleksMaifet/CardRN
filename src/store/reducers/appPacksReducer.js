@@ -1,20 +1,52 @@
-import {APP_PACKS_TYPES} from 'src/store/actions/actionTypes';
+import {createSlice} from '@reduxjs/toolkit';
 
-const initState = {
+const initialState = {
+  packs: {
+    cardPacks: [],
+  },
+  pack: null,
   searchPackName: null,
-  pageCount: null,
-  cardPacksTotalCount: null,
+  pageCount: 6,
 };
 
-export const appPacksReducer = (state = initState, action) => {
-  switch (action.type) {
-    case APP_PACKS_TYPES.APP_SET_SEARCH_PACK_NAME:
-    case APP_PACKS_TYPES.APP_SET_MAX_COUNT_PAGE:
-      return {
-        ...state,
-        ...action.payload,
+const slice = createSlice({
+  name: 'packs',
+  initialState,
+  reducers: {
+    GetPacksAC: (state, action) => {
+      state.packs = action.payload.packs;
+    },
+    SetNextPackAC: (state, action) => {
+      state.packs = {
+        ...action.payload.data,
+        cardPacks: state.packs.cardPacks.concat(action.payload.data.cardPacks),
       };
-    default:
-      return state;
-  }
-};
+    },
+    UpdatePackTitleAC: (state, action) => {
+      state.pack.name = action.payload.name;
+      const {cardPacks} = state.packs;
+      const index = cardPacks.findIndex(el => el._id === action.payload.id);
+      if (index !== -1) {
+        cardPacks[index].name = action.payload.name;
+      }
+    },
+    SetPackAC: (state, action) => {
+      const {cardPacks} = state.packs;
+      const index = cardPacks.findIndex(el => el._id === action.payload.id);
+      state.pack = cardPacks[index];
+    },
+    SearchPackNameAC: (state, action) => {
+      state.searchPackName = action.payload.title;
+    },
+  },
+});
+
+export const appPacksReducer = slice.reducer;
+
+export const {
+  GetPacksAC,
+  SetNextPackAC,
+  UpdatePackTitleAC,
+  SetPackAC,
+  SearchPackNameAC,
+} = slice.actions;

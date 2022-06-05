@@ -1,53 +1,30 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {GeneralStyles} from 'src/assets/generalStyles';
+import React, {memo, useEffect, useState} from 'react';
+import {styles} from 'src/assets/generalStyles';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-export const CheckBox = ({
-  onChange,
-  borderColor,
-  primary_borderColor,
-  backgroundColor,
-}) => {
-  const [isCheck, setCheck] = useState(false);
+const CHECK_BOX_TITLE = 'Remember Me?';
 
-  const checkClicked = () => {
-    setCheck(state => !state);
-  };
+export const CheckBox = memo(
+  ({value, onChange, checkColor, backgroundColor}) => {
+    const [isCheck, setCheck] = useState(null);
 
-  useEffect(() => {
-    onChange(`${isCheck}`);
-  }, [isCheck]);
+    const checkClicked = () => {
+      setCheck(state => !state);
+    };
 
-  return (
-    <TouchableOpacity onPress={checkClicked}>
-      <View
-        style={[
-          styles.mainBox,
-          GeneralStyles.flexContainer,
-          {borderColor},
-          {
-            backgroundColor: !isCheck ? borderColor : primary_borderColor,
-          },
-        ]}
-      >
-        <View
-          style={[
-            {backgroundColor, borderRadius: 99},
-            {
-              height: !isCheck ? 20 : 15,
-              width: !isCheck ? 20 : 15,
-            },
-          ]}
-        />
-      </View>
-    </TouchableOpacity>
-  );
-};
+    useEffect(() => {
+      onChange(isCheck);
+    }, [isCheck]);
 
-const styles = StyleSheet.create({
-  mainBox: {
-    height: 24,
-    width: 24,
-    borderRadius: 99,
+    return (
+      <BouncyCheckbox
+        fillColor={backgroundColor}
+        unfillColor={checkColor}
+        isChecked={value}
+        text={CHECK_BOX_TITLE}
+        textStyle={styles.fonts.body3}
+        onPress={checkClicked}
+      />
+    );
   },
-});
+);

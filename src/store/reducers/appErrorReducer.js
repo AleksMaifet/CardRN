@@ -1,22 +1,23 @@
-import {
-  APP_ACTION_TYPES,
-  APP_AUTHORIZATION_TYPES,
-} from 'src/store/actions/actionTypes';
+import {createSlice} from '@reduxjs/toolkit';
 
-const initState = {
+const initialState = {
   errorAuthorizationMessage: null,
   errorUploadAvatarMessage: null,
 };
 
-export const appErrorReducer = (state = initState, action) => {
-  switch (action.type) {
-    case APP_AUTHORIZATION_TYPES.APP_AUTHORIZATION_ERROR_DATA:
-    case APP_ACTION_TYPES.APP_UPLOAD_AVATAR_ERROR_DATA:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    default:
-      return state;
-  }
-};
+const slice = createSlice({
+  name: 'error',
+  initialState,
+  reducers: {
+    AuthorizationErrorAC: (state, action) => {
+      state.errorAuthorizationMessage = action.payload.error;
+    },
+    UploadAvatarErrorAC: (state, action) => {
+      state.errorUploadAvatarMessage = action.payload.error;
+    },
+  },
+});
+
+export const appErrorReducer = slice.reducer;
+
+export const {AuthorizationErrorAC, UploadAvatarErrorAC} = slice.actions;

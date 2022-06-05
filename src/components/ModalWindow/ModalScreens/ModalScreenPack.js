@@ -1,6 +1,6 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {SuperButton, SupperInput} from 'src/components/CoreComponents';
-import {GeneralStyles} from 'src/assets/generalStyles';
+import {COLORS, styles} from 'src/assets/generalStyles';
 import React, {memo, useEffect, useState} from 'react';
 import Alert from 'react-native/Libraries/Alert/Alert';
 import {ERROR_MESSAGES} from 'src/components/Screens/Main/Authorization/Form';
@@ -40,44 +40,31 @@ export const ModalScreenPack = memo(
     }, [currentTitle]);
 
     return (
-      <>
-        <Text style={{...styles.text, fontWeight: GeneralStyles.fontWeight}}>
-          {titleText}
-        </Text>
-        <Text style={styles.textStyle}>{preTitleText}</Text>
+      <View style={styles.modalContainer}>
+        <Text style={styles.fonts.body2}>{titleText}</Text>
+        <Text style={styles.fonts.body3}>{preTitleText}</Text>
         <SupperInput
           value={value}
           onChangeText={setValue}
-          autoFocus
-          borderColor={GeneralStyles.primary_color_second}
-          selectionColor={GeneralStyles.primary_color_second}
+          borderColor={COLORS.red}
+          selectionColor={COLORS.red}
+          autoFocus={!!currentTitle}
         />
-        <View style={styles.buttonContainer}>
+        <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
           <SuperButton
             callback={showModalEvent}
             width={100}
             text={buttonText}
-            color={GeneralStyles.primary_color_second}
+            color={COLORS.red}
           />
           <SuperButton
             callback={onPressEvent}
             width={100}
             text={primaryButtonText}
-            color={GeneralStyles.primary_color_second}
+            color={COLORS.red}
           />
         </View>
-      </>
+      </View>
     );
   },
 );
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 22,
-    color: GeneralStyles.text_color,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-});

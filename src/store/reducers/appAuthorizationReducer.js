@@ -1,19 +1,23 @@
-import {APP_AUTHORIZATION_TYPES} from 'src/store/actions/actionTypes';
+import {createSlice} from '@reduxjs/toolkit';
 
-const initState = {
+const initialState = {
   signInData: {},
   signUpData: {},
 };
 
-export const appAuthorizationReducer = (state = initState, action) => {
-  switch (action.type) {
-    case APP_AUTHORIZATION_TYPES.APP_LOGINIZATION_DATA:
-    case APP_AUTHORIZATION_TYPES.APP_AUTHORIZATION_DATA:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    default:
-      return state;
-  }
-};
+const slice = createSlice({
+  name: 'authorization',
+  initialState,
+  reducers: {
+    LoginizationAC: (state, action) => {
+      state.signInData = action.payload.data;
+    },
+    AuthorizationAC: (state, action) => {
+      state.signUpData = action.payload.data;
+    },
+  },
+});
+
+export const appAuthorizationReducer = slice.reducer;
+
+export const {LoginizationAC, AuthorizationAC} = slice.actions;

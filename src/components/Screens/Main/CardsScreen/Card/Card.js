@@ -1,7 +1,7 @@
 import React, {memo, useEffect} from 'react';
 
-import {Animated, Pressable, StyleSheet, Text, View} from 'react-native';
-import {GeneralStyles} from 'src/assets/generalStyles';
+import {Animated, Pressable, Text, View} from 'react-native';
+import {COLORS, styles} from 'src/assets/generalStyles';
 
 const TITLE_FRONT_SIDE = 'QUESTION';
 
@@ -54,65 +54,42 @@ export const Card = memo(({question, answer, id, setCardId}) => {
   return (
     <>
       <Pressable onPress={flipAnimation}>
-        <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
-          <View style={styles.container}>
+        <Animated.View style={[styles.CARD.flipCard, frontAnimatedStyle]}>
+          <View style={{flex: 1, overflow: 'hidden'}}>
             <Text
-              style={{
-                ...styles.text,
-                fontSize: 30,
-                color: GeneralStyles.primary_color_third,
-              }}
+              style={[
+                styles.fonts.h2,
+                {
+                  fontSize: 30,
+                  textAlign: 'center',
+                  color: COLORS.purple,
+                },
+              ]}
             >
               {TITLE_FRONT_SIDE}
             </Text>
-            <View style={styles.strip} />
-            <View style={styles.textContainer}>
-              <Text style={styles.text}>{question}</Text>
+            <View style={{height: 3, backgroundColor: COLORS.red}} />
+            <View style={[styles.flexContainer, {height: '80%'}]}>
+              <Text style={[styles.fonts.body2, {textAlign: 'center'}]}>
+                {question}
+              </Text>
             </View>
           </View>
         </Animated.View>
         <Animated.View
-          style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle]}
+          style={[
+            styles.CARD.flipCard,
+            styles.CARD.flipCardBack,
+            backAnimatedStyle,
+          ]}
         >
           <View>
-            <Text style={styles.text}>{answer}</Text>
+            <Text style={[styles.fonts.body2, {textAlign: 'center'}]}>
+              {answer}
+            </Text>
           </View>
         </Animated.View>
       </Pressable>
     </>
   );
-});
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    overflow: 'hidden',
-  },
-  textContainer: {
-    justifyContent: 'center',
-    height: '80%',
-  },
-  text: {
-    fontSize: 20,
-    fontFamily: GeneralStyles.fontFamily,
-    textAlign: 'center',
-  },
-  strip: {
-    height: 3,
-    backgroundColor: GeneralStyles.primary_color_second,
-  },
-  flipCard: {
-    width: 350,
-    height: 300,
-    padding: 10,
-    backgroundColor: GeneralStyles.text_color_second,
-    borderRadius: 10,
-    backfaceVisibility: 'hidden',
-  },
-  flipCardBack: {
-    justifyContent: 'center',
-    position: 'absolute',
-    top: 0,
-    backgroundColor: GeneralStyles.text_color_second,
-  },
 });

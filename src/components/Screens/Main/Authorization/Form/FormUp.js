@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import {Formik} from 'formik';
-import {GeneralStyles} from 'src/assets/generalStyles';
+import {COLORS} from 'src/assets/generalStyles';
 import {SuperButton, SupperInput} from 'src/components/CoreComponents';
 import {EyeComponent} from 'src/components/SvgComponents';
 import {FormContainer} from 'src/components/Screens/Main/Authorization/index';
@@ -66,26 +66,24 @@ export const FormUp = ({scrollView}) => {
               value={email}
               onChangeText={handleChange(FORMIK_STATE_MAIL)}
               placeholder={PLACEHOLDER_EMAIL}
-              borderColor={GeneralStyles.border_color}
-              errorBorderColor={GeneralStyles.error_text.color}
+              borderColor={COLORS.gray}
+              errorBorderColor={COLORS.crimson}
               isError={!!touched.email && !!errors.email}
               onBlur={handleBlur(FORMIK_STATE_MAIL)}
             />
-            <Text style={GeneralStyles.error_text}>
-              {touched.email && errors.email}
-            </Text>
+            <Text style={COLORS.crimson}>{touched.email && errors.email}</Text>
             <SupperInput
               value={password}
               onChangeText={handleChange(FORMIK_STATE_PASSWORD)}
               placeholder={PLACEHOLDER_PASSWORD}
               secureTextEntry={isSecureText}
-              borderColor={GeneralStyles.border_color}
-              errorBorderColor={GeneralStyles.error_text.color}
+              borderColor={COLORS.gray}
+              errorBorderColor={COLORS.crimson}
               isError={!!touched.password && !!errors.password}
               onBlur={handleBlur(FORMIK_STATE_PASSWORD)}
               svg={<EyeComponent isSecureText={setSecureText} />}
             />
-            <Text style={GeneralStyles.error_text}>
+            <Text style={COLORS.crimson}>
               {touched.password && errors.password}
             </Text>
             <SupperInput
@@ -93,21 +91,21 @@ export const FormUp = ({scrollView}) => {
               onChangeText={handleChange(FORMIK_STATE_CONFIRM_PASSWORD)}
               placeholder={PLACEHOLDER_CONFIRM_PASSWORD}
               secureTextEntry={isSecureConfirmText}
-              borderColor={GeneralStyles.border_color}
-              errorBorderColor={GeneralStyles.error_text.color}
+              borderColor={COLORS.gray}
+              errorBorderColor={COLORS.crimson}
               isError={!!touched.passwordConfirm && !!errors.passwordConfirm}
               onBlur={handleBlur(FORMIK_STATE_CONFIRM_PASSWORD)}
               svg={<EyeComponent isSecureText={setSecureConfirmText} />}
             />
-            <Text style={GeneralStyles.error_text}>
+            <Text style={COLORS.crimson}>
               {touched.passwordConfirm && errors.passwordConfirm}
             </Text>
           </View>
           <SuperButton
             text={BUTTON_VALUE}
             callback={handleSubmit}
-            backgroundColor={GeneralStyles.primary_color}
-            color={GeneralStyles.text_color_second}
+            backgroundColor={COLORS.primary}
+            color={COLORS.secondary}
           />
         </FormContainer>
       )}

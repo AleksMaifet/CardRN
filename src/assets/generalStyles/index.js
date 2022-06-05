@@ -1,1 +1,1 @@
-export {GeneralStyles} from './generalStyles';
+export {COLORS, styles, SIZES} from './generalStyles';

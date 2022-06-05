@@ -1,22 +1,22 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Header} from 'src/components/Screens/Header';
-import {GeneralStyles} from 'src/assets/generalStyles';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {COLORS, styles} from 'src/assets/generalStyles';
+import {TouchableOpacity, View} from 'react-native';
 import {Indicator, SupperInput} from 'src/components/CoreComponents';
 import ArrowIcon from 'react-native-vector-icons/FontAwesome';
 import PlusIcon from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  selectorGetAvatar,
-  selectorGetName,
-  selectorIsLoading,
+  selectGetAvatar,
+  selectGetName,
+  selectIsLoading,
 } from 'src/store/selectors';
 import {LinearGradientWrapper} from 'src/components/LinearGradientWrapper';
 import {PhotoUploadComponent} from 'src/components/SvgComponents';
 import {UpdateUserParamTC} from 'src/store/thunks';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {UploadAvatarErrorAC} from 'src/store/actions';
 import {ImageComponent} from 'src/components/ImageComponent';
+import {UploadAvatarErrorAC} from 'src/store/reducers';
 
 const TITLE_HEADER_CHANGE_PROFILE = 'Personal Information';
 const ERROR_UPLOAD_AVATAR_MESSAGE = 'User cancelled image picker';
@@ -32,9 +32,9 @@ const options = {
 export const ProfileChangeScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(selectorIsLoading);
-  const getUserAvatar = useSelector(selectorGetAvatar);
-  const getUserName = useSelector(selectorGetName);
+  const isLoading = useSelector(selectIsLoading);
+  const getUserAvatar = useSelector(selectGetAvatar);
+  const getUserName = useSelector(selectGetName);
 
   const [nameValue, setNameValue] = useState('');
 
@@ -50,7 +50,11 @@ export const ProfileChangeScreen = ({navigation}) => {
       );
       navigation.goBack();
     } catch (e) {
-      dispatch(UploadAvatarErrorAC(ERROR_UPLOAD_AVATAR_MESSAGE));
+      dispatch(
+        UploadAvatarErrorAC({
+          error: ERROR_UPLOAD_AVATAR_MESSAGE,
+        }),
+      );
     }
   };
 
@@ -66,44 +70,39 @@ export const ProfileChangeScreen = ({navigation}) => {
   return (
     <Header
       title={TITLE_HEADER_CHANGE_PROFILE}
-      icon={
-        <ArrowIcon
-          name="arrow-left"
-          size={20}
-          color={GeneralStyles.text_color_second}
-        />
-      }
+      icon={<ArrowIcon name="arrow-left" size={20} color={COLORS.secondary} />}
       callback={() => navigation.goBack()}
     >
-      <LinearGradientWrapper
-        color={GeneralStyles.liner_gradient.firstColorScreen}
-      >
+      <LinearGradientWrapper color={styles.liner_gradient.firstColorScreen}>
         <Indicator
           isShow={isLoading === 'loading'}
           size={'large'}
-          color={GeneralStyles.border_color}
+          color={COLORS.gray}
         >
           <View>
             <ImageComponent width={200} height={200} avatar={getUserAvatar} />
             <PhotoUploadComponent callback={uploadImageHandle} />
           </View>
-          <View style={styles.inputContainer}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingHorizontal: 50,
+              marginVertical: 20,
+            }}
+          >
             <SupperInput
               placeholder={'Nickname'}
               value={nameValue}
               onChangeText={setNameValue}
-              borderColor={GeneralStyles.border_color}
+              borderColor={COLORS.gray}
               width={200}
               onEndEditing={updateUserNameHandle}
               multiline
               numberOfLines={1}
             />
             <TouchableOpacity onPress={updateUserNameHandle}>
-              <PlusIcon
-                name="pluscircleo"
-                size={30}
-                color={GeneralStyles.text_color_second}
-              />
+              <PlusIcon name="pluscircleo" size={30} color={COLORS.secondary} />
             </TouchableOpacity>
           </View>
         </Indicator>
@@ -111,17 +110,3 @@ export const ProfileChangeScreen = ({navigation}) => {
     </Header>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 18,
-    color: GeneralStyles.text_color,
-    fontFamily: GeneralStyles.fontFamily,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 50,
-    marginVertical: 20,
-  },
-});

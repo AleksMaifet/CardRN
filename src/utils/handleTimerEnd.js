@@ -1,7 +1,7 @@
-import {IsLoadingAC} from 'src/store/actions';
+import {IsLoadingAC} from 'src/store/reducers';
 
 export const handleTimerEnd = (dispatch, ms = 1) => {
   setTimeout(() => {
-    dispatch(IsLoadingAC('success'));
+    dispatch(IsLoadingAC({isLoading: 'success'}));
   }, ms);
 };

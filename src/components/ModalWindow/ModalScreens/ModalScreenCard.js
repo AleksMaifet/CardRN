@@ -1,6 +1,6 @@
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import {SuperButton, SupperInput} from 'src/components/CoreComponents';
-import {GeneralStyles} from 'src/assets/generalStyles';
+import {COLORS, styles} from 'src/assets/generalStyles';
 import React, {memo} from 'react';
 import {Formik} from 'formik';
 
@@ -9,7 +9,6 @@ const FORMIK_STATE_ANSWER = 'answer';
 
 export const ModalScreenCard = memo(
   ({
-    currentTitle,
     showModal,
     callback,
     placeholderText,
@@ -26,15 +25,15 @@ export const ModalScreenCard = memo(
         }}
       >
         {({values: {question, answer}, handleChange, handleSubmit}) => (
-          <>
+          <View style={styles.modalContainer}>
             <SupperInput
               value={question}
               onChangeText={handleChange(FORMIK_STATE_QUESTION)}
               multiline
               numberOfLines={1}
               placeholder={placeholderText}
-              borderColor={GeneralStyles.primary_color_second}
-              selectionColor={GeneralStyles.primary_color_second}
+              borderColor={COLORS.red}
+              selectionColor={COLORS.red}
             />
             <SupperInput
               value={answer}
@@ -42,30 +41,20 @@ export const ModalScreenCard = memo(
               placeholder={primaryPlaceholderText}
               multiline
               numberOfLines={1}
-              borderColor={GeneralStyles.primary_color_second}
-              selectionColor={GeneralStyles.primary_color_second}
+              borderColor={COLORS.red}
+              selectionColor={COLORS.red}
             />
-            <View style={styles.buttonContainer}>
+            <View style={{alignItems: 'center'}}>
               <SuperButton
                 callback={handleSubmit}
                 width={100}
                 text={buttonText}
-                color={GeneralStyles.primary_color_second}
+                color={COLORS.red}
               />
             </View>
-          </>
+          </View>
         )}
       </Formik>
     );
   },
 );
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 22,
-    color: GeneralStyles.text_color,
-  },
-  buttonContainer: {
-    alignItems: 'center',
-  },
-});

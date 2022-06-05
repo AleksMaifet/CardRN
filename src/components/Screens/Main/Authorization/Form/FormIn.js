@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import {GeneralStyles} from 'src/assets/generalStyles';
+import {Text, View} from 'react-native';
+import {COLORS, SIZES} from 'src/assets/generalStyles';
 import {
   CheckBox,
   SuperButton,
@@ -21,9 +21,6 @@ const PLACEHOLDER_PASSWORD = 'Password';
 const FORMIK_STATE_MAIL = 'email';
 const FORMIK_STATE_PASSWORD = 'password';
 const FORMIK_STATE_REMEMBER_ME = 'rememberMe';
-const CHECK_BOX_TITLE = 'Remember Me?';
-
-const {width} = Dimensions.get('window');
 
 export const FormIn = () => {
   const dispatch = useDispatch();
@@ -43,16 +40,16 @@ export const FormIn = () => {
 
   return (
     <Formik
-      initialValues={{email: '', password: '', rememberMe: ''}}
+      initialValues={{email: '', password: '', rememberMe: false}}
       validate={validate}
-      onSubmit={(values, actions) => {
-        actions.resetForm();
+      onSubmit={values => {
         dispatch(LoginizationTC(values));
       }}
     >
       {({
-        values: {email, password},
+        values: {email, password, rememberMe},
         handleChange,
+        setFieldValue,
         handleSubmit,
         errors,
         touched,
@@ -63,59 +60,45 @@ export const FormIn = () => {
               value={email}
               onChangeText={handleChange(FORMIK_STATE_MAIL)}
               placeholder={PLACEHOLDER_EMAIL}
-              borderColor={GeneralStyles.border_color}
-              errorBorderColor={GeneralStyles.error_text.color}
+              borderColor={COLORS.gray}
+              errorBorderColor={COLORS.crimson}
               isError={!!touched.email && !!errors.email}
             />
-            <Text style={GeneralStyles.error_text}>
-              {touched.email && errors.email}
-            </Text>
+            <Text style={COLORS.crimson}>{touched.email && errors.email}</Text>
             <SupperInput
               value={password}
               onChangeText={handleChange(FORMIK_STATE_PASSWORD)}
               placeholder={PLACEHOLDER_PASSWORD}
               secureTextEntry={isSecureText}
-              borderColor={GeneralStyles.border_color}
-              errorBorderColor={GeneralStyles.error_text.color}
+              borderColor={COLORS.gray}
+              errorBorderColor={COLORS.crimson}
               isError={!!touched.password && !!errors.password}
               svg={<EyeComponent isSecureText={setSecureText} />}
             />
-            <Text style={GeneralStyles.error_text}>
+            <Text style={COLORS.crimson}>
               {touched.password && errors.password}
             </Text>
           </View>
-          <View style={[styles.checkboxContainer, {width: width - 50}]}>
-            <View style={styles.checkbox}>
+          <View style={{alignItems: 'flex-end', width: SIZES.width - 50}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <CheckBox
-                onChange={handleChange(FORMIK_STATE_REMEMBER_ME)}
-                borderColor={GeneralStyles.text_color}
-                primary_borderColor={GeneralStyles.primary_color}
-                backgroundColor={GeneralStyles.text_color_second}
+                value={rememberMe}
+                onChange={value =>
+                  setFieldValue(FORMIK_STATE_REMEMBER_ME, value)
+                }
+                checkColor={COLORS.secondary}
+                backgroundColor={COLORS.primary}
               />
-              <Text style={styles.label}>{CHECK_BOX_TITLE}</Text>
             </View>
           </View>
           <SuperButton
             text={BUTTON_VALUE}
             callback={handleSubmit}
-            backgroundColor={GeneralStyles.primary_color}
-            color={GeneralStyles.text_color_second}
+            backgroundColor={COLORS.primary}
+            color={COLORS.secondary}
           />
         </FormContainer>
       )}
     </Formik>
   );
 };
-
-const styles = StyleSheet.create({
-  checkboxContainer: {
-    alignItems: 'flex-end',
-  },
-  checkbox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  label: {
-    marginLeft: 8,
-  },
-});

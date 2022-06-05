@@ -1,20 +1,41 @@
-import {APP_CARDS_TYPES} from 'src/store/actions/actionTypes';
+import {createSlice} from '@reduxjs/toolkit';
 
-const initState = {
+const initialState = {
+  cards: {
+    cards: [],
+  },
   cardQuestion: null,
-  cardPackId: null,
   pageCount: 100,
 };
 
-export const appCardsReducer = (state = initState, action) => {
-  switch (action.type) {
-    case APP_CARDS_TYPES.APP_SET_CARD_PACK_ID:
-    case APP_CARDS_TYPES.APP_SET_SEARCH_CARD_QUESTION:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    default:
-      return state;
-  }
-};
+const slice = createSlice({
+  name: 'cards',
+  initialState,
+  reducers: {
+    GetCardsAC: (state, action) => {
+      state.cards = action.payload.cards;
+    },
+    DeleteCardAC: (state, action) => {
+      const {cards} = state.cards;
+      const index = cards.findIndex(({_id}) => _id === action.payload.id);
+      if (index !== -1) {
+        cards.splice(index, 1);
+      }
+    },
+    UpdateTotalCardsCountAC: (state, action) => {
+      state.cards.cardsTotalCount = action.payload.cardsTotalCount;
+    },
+    SearchCardQuestionNameAC: (state, action) => {
+      state.cardQuestion = action.payload.question;
+    },
+  },
+});
+
+export const appCardsReducer = slice.reducer;
+
+export const {
+  GetCardsAC,
+  DeleteCardAC,
+  UpdateTotalCardsCountAC,
+  SearchCardQuestionNameAC,
+} = slice.actions;

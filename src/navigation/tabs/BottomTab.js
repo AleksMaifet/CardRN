@@ -3,15 +3,15 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Screens} from 'src/navigation/screens';
 import {PacksScreen, ProfileScreen} from 'src/components/Screens';
 import IconPack from 'react-native-vector-icons/MaterialCommunityIcons';
-import {GeneralStyles} from 'src/assets/generalStyles';
 import {ImageComponent} from 'src/components/ImageComponent';
 import {useSelector} from 'react-redux';
-import {selectorGetAvatar} from 'src/store/selectors';
+import {selectGetAvatar} from 'src/store/selectors';
+import {COLORS} from 'src/assets/generalStyles';
 
 const Tab = createBottomTabNavigator();
 
 export const BottomTab = () => {
-  const getUserAvatar = useSelector(selectorGetAvatar);
+  const getUserAvatar = useSelector(selectGetAvatar);
 
   return (
     <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false}}>
@@ -22,7 +22,7 @@ export const BottomTab = () => {
           tabBarIcon: ({color, size}) => {
             return <IconPack size={size} name="cards-outline" color={color} />;
           },
-          tabBarActiveTintColor: GeneralStyles.text_color,
+          tabBarActiveTintColor: COLORS.black,
         }}
       />
       <Tab.Screen
@@ -39,7 +39,7 @@ export const BottomTab = () => {
               />
             );
           },
-          tabBarActiveTintColor: GeneralStyles.text_color,
+          tabBarActiveTintColor: COLORS.black,
         }}
       />
     </Tab.Navigator>
