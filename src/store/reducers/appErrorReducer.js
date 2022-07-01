@@ -1,13 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-const initialState = {
-  errorAuthorizationMessage: null,
-  errorUploadAvatarMessage: null,
-};
-
 const slice = createSlice({
   name: 'error',
-  initialState,
+  initialState: {
+    errorAuthorizationMessage: null,
+    errorUploadAvatarMessage: null,
+  },
   reducers: {
     AuthorizationErrorAC: (state, action) => {
       state.errorAuthorizationMessage = action.payload.error;

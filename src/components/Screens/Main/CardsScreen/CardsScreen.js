@@ -86,7 +86,7 @@ export const CardsScreen = ({route, navigation}) => {
   const onPressChangeTitlePackHandle = useCallback(
     title => {
       if (getPackName !== title) {
-        dispatch(UpdatePackTitleTC(title, id));
+        dispatch(UpdatePackTitleTC({name: title, id}));
       }
     },
     [dispatch, id, getPackName],
@@ -173,7 +173,7 @@ export const CardsScreen = ({route, navigation}) => {
         <Indicator
           isShow={isLoading === 'loading'}
           size={'large'}
-          height={SIZES.height / 1.4}
+          height={SIZES.height / 1.406}
           color={COLORS.gray}
         >
           <SwipeCards

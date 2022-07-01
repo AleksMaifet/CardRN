@@ -59,7 +59,9 @@ export const ProfileChangeScreen = ({navigation}) => {
   };
 
   const updateUserNameHandle = useCallback(() => {
-    dispatch(UpdateUserParamTC({name: nameValue}));
+    if (getUserName !== nameValue.trim()) {
+      dispatch(UpdateUserParamTC({name: nameValue}));
+    }
     navigation.goBack();
   }, [dispatch, nameValue]);
 

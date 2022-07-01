@@ -9,17 +9,9 @@ export {
   AuthorizationErrorAC,
   UploadAvatarErrorAC,
 } from './appErrorReducer';
-export {
-  appPacksReducer,
-  GetPacksAC,
-  UpdatePackTitleAC,
-  SetNextPackAC,
-  SearchPackNameAC,
-  SetPackAC,
-} from './appPacksReducer';
+export {appPacksReducer, SearchPackNameAC, SetPackAC} from './appPacksReducer';
 export {
   appCardsReducer,
-  GetCardsAC,
   DeleteCardAC,
   UpdateTotalCardsCountAC,
   SearchCardQuestionNameAC,

@@ -1,10 +1,10 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import {Animated, ScrollView, View} from 'react-native';
 import {LinearGradientWrapper} from 'src/components/LinearGradientWrapper';
 import {COLORS, SIZES, styles} from 'src/assets/generalStyles';
-import {handleScrollView} from 'src/utils';
-import {useSelector} from 'react-redux';
+import {handleScrollView, loadState} from 'src/utils';
+import {useDispatch, useSelector} from 'react-redux';
 import {selectIsLoading} from 'src/store/selectors';
 import {Indicator} from 'src/components/CoreComponents';
 import {
@@ -17,6 +17,7 @@ const TITLE_TEXT_IN = 'Sign In';
 const TITLE_TEXT_UP = 'Sign Up';
 
 export const FormScreen = () => {
+  const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
 
   const animation = useRef(new Animated.Value(0)).current;
@@ -30,6 +31,13 @@ export const FormScreen = () => {
     inputRange: [0, SIZES.width],
     outputRange: [COLORS.purplish_pink, COLORS.red],
   });
+
+  useEffect(
+    () => async () => {
+      await loadState();
+    },
+    [dispatch],
+  );
 
   return (
     <LinearGradientWrapper color={styles.liner_gradient.firstColorScreen}>

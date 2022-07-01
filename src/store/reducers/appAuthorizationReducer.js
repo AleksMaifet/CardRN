@@ -1,13 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
-
-const initialState = {
-  signInData: {},
-  signUpData: {},
-};
+import {LoginizationTC, LogOutTC} from 'src/store/thunks';
 
 const slice = createSlice({
   name: 'authorization',
-  initialState,
+  initialState: {
+    signInData: {},
+    signUpData: {},
+  },
   reducers: {
     LoginizationAC: (state, action) => {
       state.signInData = action.payload.data;
@@ -15,6 +14,15 @@ const slice = createSlice({
     AuthorizationAC: (state, action) => {
       state.signUpData = action.payload.data;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(LoginizationTC.fulfilled, (state, action) => {
+      state.signInData = action.payload.data;
+    });
+    builder.addCase(LogOutTC.fulfilled, (state, action) => {
+      state.signInData = action.payload.data;
+      state.signUpData = action.payload.data;
+    });
   },
 });
 

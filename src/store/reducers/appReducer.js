@@ -1,13 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-const initialState = {
-  isLoading: 'idle',
-  isRefreshListLoading: 'idle',
-};
-
 const slice = createSlice({
   name: 'app',
-  initialState,
+  initialState: {
+    isLoading: 'idle',
+    isRefreshListLoading: 'idle',
+  },
   reducers: {
     IsLoadingAC: (state, action) => {
       state.isLoading = action.payload.isLoading;

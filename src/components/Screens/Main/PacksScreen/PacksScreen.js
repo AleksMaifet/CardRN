@@ -27,6 +27,7 @@ import {
 import {ModalScreenPack} from 'src/components/ModalWindow/ModalScreens';
 import {Pack} from 'src/components/Screens/Main/PacksScreen/Pack';
 import {SearchPackNameAC} from 'src/store/reducers';
+import {loadState} from 'src/utils';
 
 const BUTTON_VALUE = 'ADD PACK';
 const TITLE_TEXT = 'New Pack';
@@ -89,6 +90,7 @@ export const PacksScreen = ({navigation}) => {
   };
 
   useEffect(() => {
+    loadState();
     dispatch(GetPacksTC());
     setCurrentPage(START_PAGE_VALUE);
   }, [dispatch, getSearchPackName]);
@@ -119,7 +121,7 @@ export const PacksScreen = ({navigation}) => {
         <Indicator
           isShow={isLoading === 'loading'}
           size={'large'}
-          height={SIZES.height / 1.4}
+          height={SIZES.height / 1.38}
           color={COLORS.gray}
         >
           <FlatList

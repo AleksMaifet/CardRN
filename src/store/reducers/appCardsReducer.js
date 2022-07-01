@@ -1,20 +1,16 @@
 import {createSlice} from '@reduxjs/toolkit';
-
-const initialState = {
-  cards: {
-    cards: [],
-  },
-  cardQuestion: null,
-  pageCount: 100,
-};
+import {GetCardsTC} from 'src/store/thunks';
 
 const slice = createSlice({
   name: 'cards',
-  initialState,
-  reducers: {
-    GetCardsAC: (state, action) => {
-      state.cards = action.payload.cards;
+  initialState: {
+    cards: {
+      cards: [],
     },
+    cardQuestion: null,
+    pageCount: 100,
+  },
+  reducers: {
     DeleteCardAC: (state, action) => {
       const {cards} = state.cards;
       const index = cards.findIndex(({_id}) => _id === action.payload.id);
@@ -29,12 +25,16 @@ const slice = createSlice({
       state.cardQuestion = action.payload.question;
     },
   },
+  extraReducers: builder => {
+    builder.addCase(GetCardsTC.fulfilled, (state, action) => {
+      state.cards = action.payload.cards;
+    });
+  },
 });
 
 export const appCardsReducer = slice.reducer;
 
 export const {
-  GetCardsAC,
   DeleteCardAC,
   UpdateTotalCardsCountAC,
   SearchCardQuestionNameAC,
