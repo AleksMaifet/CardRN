@@ -33,6 +33,7 @@ import {ModalWindow} from 'src/components/ModalWindow';
 import IconArrow from 'react-native-vector-icons/FontAwesome';
 import IconDots from 'react-native-vector-icons/Entypo';
 import {SearchCardQuestionNameAC, SetPackAC} from 'src/store/reducers';
+import {FormContainer} from 'src/components/Screens/Main/Authorization';
 
 const PLACEHOLDER_TEXT = 'Enter a question';
 const PRIMARY_PLACEHOLDER_TEXT = 'Enter an answer';
@@ -173,34 +174,36 @@ export const CardsScreen = ({route, navigation}) => {
         <Indicator
           isShow={isLoading === 'loading'}
           size={'large'}
-          height={SIZES.height / 1.406}
+          height={SIZES.height - 220}
           color={COLORS.gray}
         >
-          <SwipeCards
-            cards={getCards}
-            keyExtractor={item => item._id}
-            renderCard={({question, answer, _id}) => (
-              <Card
-                question={question}
-                answer={answer}
-                id={_id}
-                setCardId={setCardId}
-              />
-            )}
-            renderNoMoreCards={() => {}}
-            actions={{
-              nope: {
-                text: SWIPE_CARD_DELETE,
-                color: COLORS.red,
-                onAction: onPressDeleteCardHandle,
-              },
-              maybe: {show: false},
-              yup: {
-                text: SWIPE_CARD_NEXT,
-                color: COLORS.green,
-              },
-            }}
-          />
+          <FormContainer height={1.5}>
+            <SwipeCards
+              cards={getCards}
+              keyExtractor={item => item._id}
+              renderCard={({question, answer, _id}) => (
+                <Card
+                  question={question}
+                  answer={answer}
+                  id={_id}
+                  setCardId={setCardId}
+                />
+              )}
+              renderNoMoreCards={() => {}}
+              actions={{
+                nope: {
+                  text: SWIPE_CARD_DELETE,
+                  color: COLORS.red,
+                  onAction: onPressDeleteCardHandle,
+                },
+                maybe: {show: false},
+                yup: {
+                  text: SWIPE_CARD_NEXT,
+                  color: COLORS.green,
+                },
+              }}
+            />
+          </FormContainer>
         </Indicator>
         <View
           style={{

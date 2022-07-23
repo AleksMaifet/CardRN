@@ -36,12 +36,7 @@ export const SearchComponents = ({onPress, backgroundColor}) => {
       ]}
     >
       <TouchableOpacity onPress={onPressSearchEvent}>
-        <Icon
-          name="search"
-          size={18}
-          color={COLORS.secondary}
-          style={{marginHorizontal: 10}}
-        />
+        <Icon name="search" size={18} color={COLORS.secondary} />
       </TouchableOpacity>
       <SupperInput
         value={value}
@@ -52,12 +47,7 @@ export const SearchComponents = ({onPress, backgroundColor}) => {
         placeholderTextColor={COLORS.secondary}
       />
       <TouchableOpacity onPress={onPressCleanEvent}>
-        <Icon
-          name="close"
-          size={20}
-          color={COLORS.secondary}
-          style={{marginHorizontal: 10}}
-        />
+        <Icon name="close" size={20} color={COLORS.secondary} />
       </TouchableOpacity>
     </View>
   );

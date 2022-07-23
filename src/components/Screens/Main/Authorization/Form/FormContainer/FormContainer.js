@@ -1,11 +1,20 @@
 import React from 'react';
 import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
-import {styles} from 'src/assets/generalStyles';
+import {SIZES, styles} from 'src/assets/generalStyles';
+import {ScrollView, View} from 'react-native';
 
-export const FormContainer = ({children}) => {
+export const FormContainer = ({children, height = 2}) => {
   return (
-    <KeyboardAvoidingView style={styles.formContainer}>
-      {children}
+    <KeyboardAvoidingView
+      style={{
+        flex: 1,
+      }}
+    >
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={[styles.formContainer, {height: SIZES.height / height}]}>
+          {children}
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };

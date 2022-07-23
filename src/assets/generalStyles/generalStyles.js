@@ -105,7 +105,6 @@ export const styles = StyleSheet.create({
   formContainer: {
     alignItems: 'center',
     justifyContent: 'space-around',
-    height: 300,
     width: SIZES.width,
     paddingHorizontal: 20,
   },

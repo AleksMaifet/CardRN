@@ -1,11 +1,5 @@
 import {apiAuthorization, apiCard, apiPack} from 'src/apiRequests';
-import {
-  handleScrollView,
-  handleServerError,
-  handleTimerEnd,
-  removeState,
-  saveState,
-} from 'src/utils';
+import {handleScrollView, handleServerError, handleTimerEnd} from 'src/utils';
 import {
   AuthorizationAC,
   DeleteCardAC,
@@ -21,7 +15,6 @@ export const LoginizationTC = createAsyncThunk(
     dispatch(IsLoadingAC({isLoading: 'loading'}));
     try {
       const {data} = await apiAuthorization.setLoginUser(params);
-      await saveState(data);
       return {data};
     } catch (err) {
       handleServerError(err, dispatch);
@@ -55,10 +48,10 @@ export const LogOutTC = createAsyncThunk(
     dispatch(IsLoadingAC({isLoading: 'loading'}));
     try {
       await apiAuthorization.logOutUser();
-      await removeState('authorization');
       return {data: {}};
     } catch (err) {
       handleServerError(err, dispatch);
+      return rejectWithValue(null);
     } finally {
       handleTimerEnd(dispatch);
     }
